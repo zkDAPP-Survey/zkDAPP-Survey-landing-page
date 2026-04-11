@@ -1,0 +1,1697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>zkDAPP-Survey — Decentralized Privacy-Preserving Survey Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --blue: #2563EB;
+    --blue-dark: #1D4ED8;
+    --blue-light: #EFF6FF;
+    --blue-mid: #93C5FD;
+    --blue-soft: #DBEAFE;
+    --white: #ffffff;
+    --gray-50: #F8FAFC;
+    --gray-100: #F1F5F9;
+    --gray-200: #E2E8F0;
+    --gray-300: #CBD5E1;
+    --gray-400: #94A3B8;
+    --gray-600: #475569;
+    --gray-700: #334155;
+    --gray-900: #0F172A;
+    --sans: 'Space Grotesk', sans-serif;
+    --mono: 'Space Mono', monospace;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--white);
+    color: var(--gray-900);
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 3rem;
+    background: rgba(255,255,255,0.94);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--gray-200);
+  }
+
+  .nav-logo {
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    color: var(--blue);
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  nav ul { display: flex; gap: 2rem; list-style: none; }
+  nav a { font-size: 0.85rem; color: var(--gray-600); text-decoration: none; font-weight: 500; transition: color 0.2s; }
+  nav a:hover { color: var(--blue); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    background: linear-gradient(150deg, #EFF6FF 0%, #DBEAFE 50%, #EFF6FF 100%);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 8rem 3rem 5rem;
+    gap: 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 480px; height: 480px;
+    background: radial-gradient(circle, rgba(37,99,235,0.1) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: white;
+    border: 1px solid var(--blue-soft);
+    border-radius: 100px;
+    padding: 0.35rem 1rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--blue);
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .hero-badge-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--blue);
+  }
+
+  h1 {
+    font-size: clamp(2.2rem, 4vw, 3.4rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    color: var(--gray-900);
+    margin-bottom: 1.25rem;
+  }
+
+  h1 .accent { color: var(--blue); }
+
+  .hero-desc {
+    font-size: 1rem;
+    color: var(--gray-600);
+    max-width: 480px;
+    line-height: 1.75;
+    margin-bottom: 2rem;
+    font-weight: 400;
+  }
+
+  .hero-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+  .tag {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    padding: 0.3rem 0.7rem;
+    background: white;
+    border: 1px solid var(--blue-soft);
+    color: var(--blue-dark);
+    border-radius: 4px;
+  }
+
+  .hero-phones {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    align-items: flex-end;
+  }
+
+  .hero-phone {
+    appearance: none;
+    padding: 0;
+    border-radius: 28px;
+    overflow: hidden;
+    border: 2px solid rgba(37,99,235,0.18);
+    box-shadow: 0 20px 60px rgba(37,99,235,0.13), 0 4px 16px rgba(0,0,0,0.05);
+    background: var(--gray-100);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 0.6rem;
+    cursor: zoom-in;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+
+  .hero-phone:hover {
+    border-color: var(--blue-mid);
+    box-shadow: 0 24px 72px rgba(37,99,235,0.18), 0 8px 22px rgba(0,0,0,0.08);
+    transform: translateY(-6px);
+  }
+
+  .hero-phone:focus-visible {
+    outline: 3px solid var(--blue-mid);
+    outline-offset: 4px;
+  }
+
+  .hero-phone.main { width: 220px; height: 440px; }
+  .hero-phone.side { width: 180px; height: 360px; opacity: 0.86; margin-bottom: -10px; }
+
+  .hero-shot {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: top center;
+    display: block;
+    background: white;
+  }
+
+  .hero-phone .ph-icon-large,
+  .hero-phone .ph-label {
+    display: none;
+  }
+
+  .ph-icon-large {
+    width: 48px; height: 48px;
+    border: 2px dashed var(--gray-300);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+  }
+
+  .ph-label {
+    font-family: var(--mono);
+    font-size: 0.58rem;
+    color: var(--gray-400);
+    text-align: center;
+    padding: 0 1rem;
+    line-height: 1.5;
+  }
+
+  /* SECTIONS */
+  section { padding: 5rem 2rem; max-width: 1360px; margin: 0 auto; }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 0.75rem;
+  }
+
+  h2 {
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+    color: var(--gray-900);
+  }
+
+  .lead {
+    font-size: 1rem;
+    color: var(--gray-600);
+    max-width: 600px;
+    line-height: 1.75;
+    margin-bottom: 3rem;
+  }
+
+  .divider { height: 1px; background: var(--gray-200); }
+
+  /* ABOUT */
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+
+  .about-text p { font-size: 0.95rem; color: var(--gray-600); line-height: 1.85; margin-bottom: 1rem; }
+  .about-text strong { color: var(--blue-dark); font-weight: 600; }
+
+  .goals-list { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+
+  .goal-item {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    padding: 1rem 1.25rem;
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+    background: var(--gray-50);
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .goal-item:hover { border-color: var(--blue-mid); box-shadow: 0 2px 12px rgba(37,99,235,0.07); }
+
+  .goal-num { font-family: var(--mono); font-size: 0.65rem; color: var(--blue); font-weight: 700; min-width: 20px; margin-top: 2px; }
+  .goal-text { font-size: 0.88rem; color: var(--gray-600); line-height: 1.6; }
+
+  /* APP SHOWCASE */
+  .showcase-bg {
+    background: var(--gray-50);
+    border-top: 1px solid var(--gray-200);
+    border-bottom: 1px solid var(--gray-200);
+    padding: 5rem 0;
+  }
+
+  .showcase-inner { max-width: 1360px; margin: 0 auto; padding: 0 2rem; }
+
+  .app-processes {
+    max-width: 1360px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+  }
+
+  .app-process {
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
+  }
+
+  .app-process-header {
+    padding: 1.25rem 1.5rem 0.75rem;
+  }
+
+  .app-process-kicker {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 0.45rem;
+  }
+
+  .app-process-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--gray-900);
+    margin-bottom: 0.4rem;
+  }
+
+  .app-process-desc {
+    font-size: 0.9rem;
+    color: var(--gray-600);
+    max-width: 760px;
+  }
+
+  .screens-row {
+    display: flex;
+    gap: 2rem;
+    overflow-x: auto;
+    padding: 1rem 0 0;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+  }
+
+  .screens-row::-webkit-scrollbar { display: none; }
+  .screens-row-primary { display: none; }
+  .screens-row-legacy { display: none; }
+
+  .app-process-carousel {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 1rem;
+    padding: 0 1.25rem 1.5rem;
+  }
+
+  .carousel-arrow {
+    appearance: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    border-radius: 999px;
+    border: 1px solid var(--gray-200);
+    background: var(--gray-50);
+    color: var(--blue-dark);
+    font-size: 1.2rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s, transform 0.2s;
+  }
+
+  .carousel-arrow:hover {
+    background: var(--blue-light);
+    border-color: var(--blue-mid);
+    transform: translateY(-1px);
+  }
+
+  .carousel-arrow:focus-visible {
+    outline: 3px solid var(--blue-mid);
+    outline-offset: 3px;
+  }
+
+  .screen-card {
+    flex-shrink: 0;
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+    width: 230px;
+  }
+
+  .screen-phone {
+    appearance: none;
+    width: 230px;
+    height: 446px;
+    padding: 0;
+    border-radius: 22px;
+    border: 2px solid var(--gray-200);
+    background: var(--gray-100);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+    position: relative;
+    overflow: hidden;
+    cursor: zoom-in;
+  }
+
+  .screen-phone::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 44px; height: 5px;
+    background: var(--gray-200);
+    border-radius: 3px;
+  }
+
+  .screen-phone:hover {
+    border-color: var(--blue-mid);
+    box-shadow: 0 8px 28px rgba(37,99,235,0.13);
+    transform: translateY(-5px);
+  }
+
+  .screen-phone:focus-visible {
+    outline: 3px solid var(--blue-mid);
+    outline-offset: 4px;
+  }
+
+  .screen-shot {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: top center;
+    display: block;
+    background: white;
+  }
+
+  .showcase-hint {
+    font-size: 0.82rem;
+    color: var(--gray-600);
+    margin: 0 3rem;
+  }
+
+  .showcase-hint-legacy { display: none; }
+
+  .screen-ph-box {
+    width: 56px; height: 56px;
+    border: 2px dashed var(--gray-300);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: var(--gray-400);
+  }
+
+  .screen-ph-text {
+    font-family: var(--mono);
+    font-size: 0.58rem;
+    color: var(--gray-400);
+    text-align: center;
+    padding: 0 1rem;
+    line-height: 1.5;
+  }
+
+  .screen-name {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--gray-700);
+    text-align: center;
+  }
+
+  .screen-sub {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    color: var(--gray-400);
+    text-align: center;
+    margin-top: -0.3rem;
+  }
+
+  /* ARCHITECTURE */
+  .arch-flow {
+    display: flex;
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .arch-node {
+    flex: 1;
+    min-width: 155px;
+    padding: 1.5rem 1.25rem;
+    background: white;
+    border-right: 1px solid var(--gray-200);
+    position: relative;
+    transition: background 0.2s;
+  }
+
+  .arch-node:last-child { border-right: none; }
+  .arch-node:hover { background: var(--blue-light); }
+
+  .arch-arrow {
+    position: absolute;
+    right: -13px; top: 50%;
+    transform: translateY(-50%);
+    width: 22px; height: 22px;
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px;
+    color: var(--blue);
+    z-index: 1;
+  }
+
+  .arch-node:last-child .arch-arrow { display: none; }
+
+  .arch-node-num { font-family: var(--mono); font-size: 0.6rem; font-weight: 700; color: var(--blue); margin-bottom: 0.4rem; letter-spacing: 0.08em; }
+  .arch-node-title { font-size: 0.85rem; font-weight: 700; color: var(--gray-900); margin-bottom: 0.75rem; }
+  .arch-node-items { list-style: none; display: flex; flex-direction: column; gap: 0.3rem; }
+  .arch-node-items li { font-size: 0.76rem; color: var(--gray-600); padding-left: 0.75rem; position: relative; line-height: 1.45; }
+  .arch-node-items li::before { content: '·'; position: absolute; left: 0; color: var(--blue); }
+
+  /* TEAM */
+  .team-bg { background: var(--gray-50); border-top: 1px solid var(--gray-200); border-bottom: 1px solid var(--gray-200); }
+
+  .supervisor-card {
+    display: inline-flex;
+    align-items: center;
+    gap: 1.25rem;
+    padding: 1.25rem 1.75rem;
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  }
+
+  .avatar {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: var(--blue-light);
+    border: 2px solid var(--blue-soft);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--blue-dark);
+    flex-shrink: 0;
+  }
+
+  .sup-label { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--blue); margin-bottom: 0.25rem; }
+  .sup-name { font-size: 0.92rem; font-weight: 600; color: var(--gray-900); }
+
+  .team-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(185px, 1fr)); gap: 1rem; }
+
+  .team-member {
+    padding: 1.5rem 1.25rem;
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .team-member:hover { border-color: var(--blue-mid); box-shadow: 0 4px 16px rgba(37,99,235,0.08); }
+  .member-name { font-size: 0.88rem; font-weight: 600; color: var(--gray-900); margin: 0.75rem 0 0.25rem; }
+  .member-role { font-family: var(--mono); font-size: 0.65rem; color: var(--blue); }
+
+  /* SPRINTS */
+  .sprint-list { display: none; }
+
+  .sprint-panel {
+    border: 1px solid var(--gray-200);
+    border-radius: 16px;
+    background: linear-gradient(180deg, var(--gray-50) 0%, white 100%);
+    overflow: hidden;
+  }
+
+  .sprint-panel summary {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.1rem 1.25rem;
+    cursor: pointer;
+  }
+
+  .sprint-panel summary::-webkit-details-marker { display: none; }
+
+  .sprint-toggle-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .sprint-toggle-label {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--gray-900);
+  }
+
+  .sprint-toggle-subtitle {
+    font-size: 0.82rem;
+    color: var(--gray-600);
+  }
+
+  .sprint-toggle-button {
+    flex-shrink: 0;
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: white;
+    background: var(--blue);
+    border: 1px solid var(--blue);
+    border-radius: 999px;
+    padding: 0.8rem 1rem;
+    transition: background 0.2s, border-color 0.2s, transform 0.2s;
+  }
+
+  .sprint-panel summary:hover .sprint-toggle-button {
+    background: var(--blue-dark);
+    border-color: var(--blue-dark);
+    transform: translateY(-1px);
+  }
+
+  .sprint-panel[open] .sprint-toggle-button {
+    background: white;
+    color: var(--blue-dark);
+  }
+
+  .sprint-downloads {
+    list-style: none;
+    border-top: 1px solid var(--gray-200);
+    padding: 0;
+    margin: 0;
+    background: white;
+  }
+
+  .sprint-download-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--gray-200);
+  }
+
+  .sprint-download-item:last-child { border-bottom: none; }
+
+  .sprint-download-name {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--blue);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .sprint-download-link {
+    appearance: none;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--blue-dark);
+    text-decoration: none;
+    border: 1px solid var(--blue-soft);
+    background: var(--blue-light);
+    border-radius: 999px;
+    padding: 0.55rem 0.9rem;
+    transition: background 0.2s, border-color 0.2s, transform 0.2s;
+    cursor: pointer;
+  }
+
+  .sprint-download-link:hover {
+    background: #dbeafe;
+    border-color: var(--blue-mid);
+    transform: translateY(-1px);
+  }
+
+  .sprint-modal {
+    position: fixed;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background: rgba(15, 23, 42, 0.74);
+    z-index: 200;
+  }
+
+  .sprint-modal.is-open { display: flex; }
+
+  .sprint-modal-dialog {
+    width: auto;
+    max-width: calc(100vw - 4rem);
+    max-height: calc(100vh - 4rem);
+    background: transparent;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 24px 80px rgba(15, 23, 42, 0.28);
+  }
+
+  .sprint-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--gray-200);
+    background: var(--gray-50);
+  }
+
+  .sprint-modal-label {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--blue);
+  }
+
+  .sprint-modal-close {
+    appearance: none;
+    border: 1px solid var(--gray-200);
+    background: white;
+    color: var(--gray-700);
+    border-radius: 999px;
+    padding: 0.55rem 0.9rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .sprint-modal-body {
+    max-height: calc(100vh - 8.5rem);
+    overflow: auto;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+  }
+
+  .sprint-modal-image {
+    display: block;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: calc(100vh - 10.5rem);
+    object-fit: contain;
+  }
+
+  .sprint-list { border: 1px solid var(--gray-200); border-radius: 12px; overflow: hidden; }
+
+  .sprint-item {
+    display: grid;
+    grid-template-columns: 165px 1fr;
+    border-bottom: 1px solid var(--gray-200);
+    transition: background 0.15s;
+  }
+
+  .sprint-item:last-child { border-bottom: none; }
+
+  .sprint-meta {
+    padding: 1.5rem;
+    border-right: 1px solid var(--gray-200);
+    background: var(--gray-50);
+    display: flex; flex-direction: column; gap: 0.35rem;
+    transition: background 0.15s;
+  }
+
+  .sprint-item:hover .sprint-meta { background: var(--blue-light); }
+
+  .sprint-number { font-family: var(--mono); font-size: 0.68rem; font-weight: 700; color: var(--blue); letter-spacing: 0.08em; }
+  .sprint-dates { font-size: 0.72rem; color: var(--gray-400); font-family: var(--mono); }
+
+  .sprint-content { padding: 1.5rem 2rem; background: white; }
+  .sprint-title { font-size: 0.95rem; font-weight: 600; color: var(--gray-900); margin-bottom: 0.5rem; }
+  .sprint-desc { font-size: 0.83rem; color: var(--gray-600); line-height: 1.7; }
+
+  .sprint-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.75rem; }
+  .sprint-tag {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    padding: 0.2rem 0.55rem;
+    background: var(--blue-light);
+    color: var(--blue-dark);
+    border-radius: 4px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--gray-900);
+    color: white;
+    padding: 2.5rem 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .footer-logo { font-family: var(--mono); font-size: 0.85rem; color: var(--blue-mid); font-weight: 700; }
+  .footer-info { font-family: var(--mono); font-size: 0.65rem; color: rgba(255,255,255,0.3); text-align: right; line-height: 1.8; }
+
+  /* ANIMATIONS */
+  .fade-in { opacity: 0; transform: translateY(14px); transition: opacity 0.5s ease, transform 0.5s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    nav ul { display: none; }
+    .hero { grid-template-columns: 1fr; padding: 7rem 1.5rem 3rem; gap: 2rem; }
+    .hero-phone.side { display: none; }
+    .hero-phone.main { width: min(78vw, 280px); height: auto; aspect-ratio: 1 / 2; }
+    .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .arch-flow { flex-direction: column; }
+    .arch-node { border-right: none; border-bottom: 1px solid var(--gray-200); }
+    .arch-node:last-child { border-bottom: none; }
+    .arch-arrow { display: none; }
+    section { padding: 3.5rem 1.5rem; }
+    .sprint-panel summary { flex-direction: column; align-items: flex-start; }
+    .sprint-toggle-button { width: 100%; text-align: center; }
+    .sprint-download-item { flex-direction: column; align-items: flex-start; }
+    .sprint-modal { padding: 1rem; }
+    .sprint-item { grid-template-columns: 1fr; }
+    .sprint-meta { border-right: none; border-bottom: 1px solid var(--gray-200); }
+    footer { flex-direction: column; gap: 1rem; text-align: center; }
+    .footer-info { text-align: center; }
+    .screens-row { padding: 1rem 1.5rem 1.5rem; }
+    .showcase-inner { padding: 0 1.5rem; }
+    .app-processes { padding: 0 1.5rem; }
+    .app-process-header { padding: 1rem 1rem 0.5rem; }
+    .app-process-carousel { grid-template-columns: 1fr; padding: 0 1rem 1rem; }
+    .carousel-arrow { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">zkDAPP-Survey</a>
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#app">App</a></li>
+    <li><a href="#architecture">Architecture</a></li>
+    <li><a href="#team">Team</a></li>
+    <li><a href="#sprints">Sprints</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div>
+    <div class="hero-badge"><span class="hero-badge-dot"></span>Tímový projekt 2025/2026</div>
+    <h1>Decentralized<br><span class="accent">Privacy-Preserving</span><br>Survey Platform</h1>
+    <p class="hero-desc">Transparent, bias-resistant public surveys powered by zero-knowledge proofs — voters prove eligibility without ever revealing their identity.</p>
+    <div class="hero-tags">
+      <span class="tag">zkSNARKs</span>
+      <span class="tag">Solidity</span>
+      <span class="tag">EIP-7702</span>
+      <span class="tag">Verifiable Credentials</span>
+      <span class="tag">React Native</span>
+      <span class="tag">Vocdoni</span>
+    </div>
+  </div>
+  <div class="hero-phones">
+    <div class="hero-phone side">
+      <div class="ph-icon-large">📱</div>
+      <div class="ph-label">screenshot placeholder</div>
+    </div>
+    <div class="hero-phone main">
+      <div class="ph-icon-large">📱</div>
+      <div class="ph-label">screenshot placeholder</div>
+    </div>
+    <div class="hero-phone side">
+      <div class="ph-icon-large">📱</div>
+      <div class="ph-label">screenshot placeholder</div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="eyebrow">01 — About the project</div>
+  <div class="about-grid">
+    <div class="about-text">
+      <h2>Replacing centralized survey agencies with cryptographic truth</h2>
+      <p>Public opinion surveys are a cornerstone of democratic societies, yet centralized agencies suffer from trust and integrity issues. Operators may manipulate samples, suppress results, or fail to prevent <strong>Sybil attacks</strong>.</p>
+      <p>zkDAPP-Survey uses <strong>zkSNARK zero-knowledge proofs</strong> to allow any voter to prove eligibility — citizenship, age, region — without revealing their identity. All results are publicly verifiable on-chain.</p>
+      <p>The platform uses a <strong>gas sponsorship model</strong> based on EIP-7702, where survey creators can pre-fund participation for the first N voters. After that sponsored quota is used, the survey remains available and the mobile app still handles all proof generation entirely on-device.</p>
+    </div>
+    <ul class="goals-list">
+      <li class="goal-item fade-in"><span class="goal-num">01</span><span class="goal-text">Eliminate trust in centralized entities by using a public blockchain for transparent vote tallying</span></li>
+      <li class="goal-item fade-in"><span class="goal-num">02</span><span class="goal-text">Prevent Sybil attacks through unique user verification based on government-issued verifiable credentials</span></li>
+      <li class="goal-item fade-in"><span class="goal-num">03</span><span class="goal-text">Incorporate user attributes — age, geolocation, education — for filtered eligibility and result interpretation</span></li>
+      <li class="goal-item fade-in"><span class="goal-num">04</span><span class="goal-text">Maintain full voter privacy using zkSNARKs generated client-side on the voter's smartphone</span></li>
+      <li class="goal-item fade-in"><span class="goal-num">05</span><span class="goal-text">Allow survey creators to sponsor gas costs for the first N participants while keeping the survey open beyond the sponsored quota</span></li>
+    </ul>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- APP SHOWCASE -->
+<div id="app" class="showcase-bg">
+  <div class="showcase-inner">
+    <div class="eyebrow">02 — Mobile application</div>
+    <h2>How the app looks</h2>
+    <p class="lead">The smartphone app handles the entire voting flow — from identity verification via the Identity wallet, through client-side zkSNARK proof generation, to anonymous vote submission on-chain.</p>
+  </div>
+
+  <div class="app-processes">
+    <div class="app-process fade-in">
+      <div class="app-process-header">
+        <div class="app-process-kicker">Process 01</div>
+        <div class="app-process-title">Discover And Vote</div>
+        <div class="app-process-desc">Browse surveys, inspect details, verify identity, generate eligibility proofs, and submit an anonymous vote.</div>
+      </div>
+      <div class="app-process-carousel">
+        <button class="carousel-arrow" type="button" data-carousel-target="process-discover" data-direction="prev" aria-label="Previous discover and vote screenshots">&#8249;</button>
+        <div class="screens-row" id="process-discover">
+        <div class="screen-card fade-in">
+          <button class="screen-phone" type="button" data-app-image="assets/screenshots/explore.jpg" data-app-label="Explore surveys">
+            <img class="screen-shot" src="assets/screenshots/explore.jpg" alt="Explore surveys screen">
+          </button>
+          <div class="screen-name">Explore Surveys</div>
+        </div>
+
+        <div class="screen-card fade-in">
+          <button class="screen-phone" type="button" data-app-image="assets/screenshots/survey-details.jpg" data-app-label="Survey detail">
+            <img class="screen-shot" src="assets/screenshots/survey-details.jpg" alt="Survey detail screen">
+          </button>
+          <div class="screen-name">Survey Detail</div>
+        </div>
+
+        <div class="screen-card fade-in">
+          <button class="screen-phone" type="button" data-app-image="assets/screenshots/verify-your-identity.jpg" data-app-label="Verify identity">
+            <img class="screen-shot" src="assets/screenshots/verify-your-identity.jpg" alt="Verify identity screen">
+          </button>
+          <div class="screen-name">Verify Identity</div>
+        </div>
+
+        <div class="screen-card fade-in">
+          <button class="screen-phone" type="button" data-app-image="assets/screenshots/checking-eligibility.jpg" data-app-label="Checking eligibility">
+            <img class="screen-shot" src="assets/screenshots/checking-eligibility.jpg" alt="Checking eligibility screen">
+          </button>
+          <div class="screen-name">Checking Eligibility</div>
+        </div>
+
+        <div class="screen-card fade-in">
+          <button class="screen-phone" type="button" data-app-image="assets/screenshots/identity-verified.jpg" data-app-label="Identity verified">
+            <img class="screen-shot" src="assets/screenshots/identity-verified.jpg" alt="Identity verified screen">
+          </button>
+          <div class="screen-name">Identity Verified</div>
+        </div>
+
+        <div class="screen-card fade-in">
+          <button class="screen-phone" type="button" data-app-image="assets/screenshots/vote.jpg" data-app-label="Voting screen">
+            <img class="screen-shot" src="assets/screenshots/vote.jpg" alt="Voting screen">
+          </button>
+          <div class="screen-name">Voting Screen</div>
+        </div>
+
+        <div class="screen-card fade-in">
+          <button class="screen-phone" type="button" data-app-image="assets/screenshots/submitted-vote.jpg" data-app-label="Vote submitted">
+            <img class="screen-shot" src="assets/screenshots/submitted-vote.jpg" alt="Vote submitted screen">
+          </button>
+          <div class="screen-name">Vote Submitted</div>
+        </div>
+        </div>
+        <button class="carousel-arrow" type="button" data-carousel-target="process-discover" data-direction="next" aria-label="Next discover and vote screenshots">&#8250;</button>
+      </div>
+    </div>
+
+    <div class="app-process fade-in">
+      <div class="app-process-header">
+        <div class="app-process-kicker">Process 02</div>
+        <div class="app-process-title">Create A Survey</div>
+        <div class="app-process-desc">Move through the survey builder, define eligible voters, prepare questions, allocate budget, and review before launch.</div>
+      </div>
+      <div class="app-process-carousel">
+        <button class="carousel-arrow" type="button" data-carousel-target="process-create" data-direction="prev" aria-label="Previous create survey screenshots">&#8249;</button>
+        <div class="screens-row" id="process-create">
+        <div class="screen-card fade-in">
+          <button class="screen-phone" type="button" data-app-image="assets/screenshots/create-survey.jpg" data-app-label="Create survey">
+            <img class="screen-shot" src="assets/screenshots/create-survey.jpg" alt="Create survey screen">
+          </button>
+          <div class="screen-name">Create Survey</div>
+        </div>
+
+        <div class="screen-card fade-in">
+          <button class="screen-phone" type="button" data-app-image="assets/screenshots/create-survey-voter-requirement.jpg" data-app-label="Voter requirements">
+            <img class="screen-shot" src="assets/screenshots/create-survey-voter-requirement.jpg" alt="Voter requirements screen">
+          </button>
+          <div class="screen-name">Voter Requirements</div>
+        </div>
+
+        <div class="screen-card fade-in">
+          <button class="screen-phone" type="button" data-app-image="assets/screenshots/create-survey-questions.jpg" data-app-label="Survey questions">
+            <img class="screen-shot" src="assets/screenshots/create-survey-questions.jpg" alt="Survey questions screen">
+          </button>
+          <div class="screen-name">Survey Questions</div>
+        </div>
+
+        <div class="screen-card fade-in">
+          <button class="screen-phone" type="button" data-app-image="assets/screenshots/create-survey-budget.jpg" data-app-label="Survey budget">
+            <img class="screen-shot" src="assets/screenshots/create-survey-budget.jpg" alt="Survey budget screen">
+          </button>
+          <div class="screen-name">Survey Budget</div>
+        </div>
+
+        <div class="screen-card fade-in">
+          <button class="screen-phone" type="button" data-app-image="assets/screenshots/review-submit.jpg" data-app-label="Review and submit">
+            <img class="screen-shot" src="assets/screenshots/review-submit.jpg" alt="Review and submit screen">
+          </button>
+          <div class="screen-name">Review And Submit</div>
+        </div>
+        </div>
+        <button class="carousel-arrow" type="button" data-carousel-target="process-create" data-direction="next" aria-label="Next create survey screenshots">&#8250;</button>
+      </div>
+    </div>
+
+    <div class="app-process fade-in">
+      <div class="app-process-header">
+        <div class="app-process-kicker">Process 03</div>
+        <div class="app-process-title">Manage Surveys And Account</div>
+        <div class="app-process-desc">Use the dashboard to review your surveys, monitor participation, manage active campaigns, and handle account settings.</div>
+      </div>
+      <div class="app-process-carousel">
+        <button class="carousel-arrow" type="button" data-carousel-target="process-manage" data-direction="prev" aria-label="Previous manage participation screenshots">&#8249;</button>
+        <div class="screens-row" id="process-manage">
+        <div class="screen-card fade-in">
+          <button class="screen-phone" type="button" data-app-image="assets/screenshots/home.jpg" data-app-label="Home dashboard">
+            <img class="screen-shot" src="assets/screenshots/home.jpg" alt="Home dashboard screen">
+          </button>
+          <div class="screen-name">Home Dashboard</div>
+        </div>
+
+        <div class="screen-card fade-in">
+          <button class="screen-phone" type="button" data-app-image="assets/screenshots/my-created-surveys.jpg" data-app-label="My created surveys">
+            <img class="screen-shot" src="assets/screenshots/my-created-surveys.jpg" alt="My created surveys screen">
+          </button>
+          <div class="screen-name">My Created Surveys</div>
+        </div>
+
+        <div class="screen-card fade-in">
+          <button class="screen-phone" type="button" data-app-image="assets/screenshots/my-participated-surveys.jpg" data-app-label="Participated surveys">
+            <img class="screen-shot" src="assets/screenshots/my-participated-surveys.jpg" alt="Participated surveys screen">
+          </button>
+          <div class="screen-name">Participated Surveys</div>
+        </div>
+
+        <div class="screen-card fade-in">
+          <button class="screen-phone" type="button" data-app-image="assets/screenshots/manage-survey.jpg" data-app-label="Manage survey">
+            <img class="screen-shot" src="assets/screenshots/manage-survey.jpg" alt="Manage survey screen">
+          </button>
+          <div class="screen-name">Manage Survey</div>
+        </div>
+
+        <div class="screen-card fade-in">
+          <button class="screen-phone" type="button" data-app-image="assets/screenshots/settings.jpg" data-app-label="Settings">
+            <img class="screen-shot" src="assets/screenshots/settings.jpg" alt="Settings screen">
+          </button>
+          <div class="screen-name">Settings</div>
+        </div>
+        </div>
+        <button class="carousel-arrow" type="button" data-carousel-target="process-manage" data-direction="next" aria-label="Next manage participation screenshots">&#8250;</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="screens-row screens-row-primary">
+    <div class="screen-card fade-in">
+      <button class="screen-phone" type="button" data-app-image="assets/screenshots/home.jpg" data-app-label="Home dashboard">
+        <img class="screen-shot" src="assets/screenshots/home.jpg" alt="Home dashboard screen">
+      </button>
+      <div class="screen-name">Home Dashboard</div>
+        </div>
+
+    <div class="screen-card fade-in">
+      <button class="screen-phone" type="button" data-app-image="assets/screenshots/explore.jpg" data-app-label="Explore surveys">
+        <img class="screen-shot" src="assets/screenshots/explore.jpg" alt="Explore surveys screen">
+      </button>
+      <div class="screen-name">Explore Surveys</div>
+        </div>
+
+    <div class="screen-card fade-in">
+      <button class="screen-phone" type="button" data-app-image="assets/screenshots/survey-details.jpg" data-app-label="Survey detail">
+        <img class="screen-shot" src="assets/screenshots/survey-details.jpg" alt="Survey detail screen">
+      </button>
+      <div class="screen-name">Survey Detail</div>
+        </div>
+
+    <div class="screen-card fade-in">
+      <button class="screen-phone" type="button" data-app-image="assets/screenshots/verify-your-identity.jpg" data-app-label="Verify identity">
+        <img class="screen-shot" src="assets/screenshots/verify-your-identity.jpg" alt="Verify identity screen">
+      </button>
+      <div class="screen-name">Verify Identity</div>
+      <div class="screen-sub">// identity_verify</div>
+    </div>
+
+    <div class="screen-card fade-in">
+      <button class="screen-phone" type="button" data-app-image="assets/screenshots/vote.jpg" data-app-label="Voting screen">
+        <img class="screen-shot" src="assets/screenshots/vote.jpg" alt="Voting screen">
+      </button>
+      <div class="screen-name">Voting Screen</div>
+      <div class="screen-sub">// vote</div>
+    </div>
+
+    <div class="screen-card fade-in">
+      <button class="screen-phone" type="button" data-app-image="assets/screenshots/submitted-vote.jpg" data-app-label="Vote submitted">
+        <img class="screen-shot" src="assets/screenshots/submitted-vote.jpg" alt="Vote submitted screen">
+      </button>
+      <div class="screen-name">Vote Submitted</div>
+      <div class="screen-sub">// vote_submitted</div>
+    </div>
+
+    <div class="screen-card fade-in">
+      <button class="screen-phone" type="button" data-app-image="assets/screenshots/create-survey.jpg" data-app-label="Create survey">
+        <img class="screen-shot" src="assets/screenshots/create-survey.jpg" alt="Create survey screen">
+      </button>
+      <div class="screen-name">Create Survey</div>
+      <div class="screen-sub">// create_survey</div>
+    </div>
+
+    <div class="screen-card fade-in">
+      <button class="screen-phone" type="button" data-app-image="assets/screenshots/manage-survey.jpg" data-app-label="Manage survey">
+        <img class="screen-shot" src="assets/screenshots/manage-survey.jpg" alt="Manage survey screen">
+      </button>
+      <div class="screen-name">Manage Survey</div>
+      <div class="screen-sub">// manage_survey</div>
+    </div>
+  </div>
+
+  <p class="showcase-hint showcase-hint-legacy">Click any screenshot to open a larger preview.</p>
+
+  <div class="screens-row screens-row-legacy">
+    <div class="screen-card fade-in">
+      <div class="screen-phone">
+        <div class="screen-ph-box">🏠</div>
+        <div class="screen-ph-text">Add screenshot here</div>
+      </div>
+      <div class="screen-name">Home Dashboard</div>
+      <div class="screen-sub">// home</div>
+    </div>
+
+    <div class="screen-card fade-in">
+      <div class="screen-phone">
+        <div class="screen-ph-box">🔍</div>
+        <div class="screen-ph-text">Add screenshot here</div>
+      </div>
+      <div class="screen-name">Explore Surveys</div>
+      <div class="screen-sub">// explore</div>
+    </div>
+
+    <div class="screen-card fade-in">
+      <div class="screen-phone">
+        <div class="screen-ph-box">📋</div>
+        <div class="screen-ph-text">Add screenshot here</div>
+      </div>
+      <div class="screen-name">Survey Detail</div>
+      <div class="screen-sub">// survey_detail</div>
+    </div>
+
+    <div class="screen-card fade-in">
+      <div class="screen-phone">
+        <div class="screen-ph-box">🔒</div>
+        <div class="screen-ph-text">Add screenshot here</div>
+      </div>
+      <div class="screen-name">Verify Identity</div>
+      <div class="screen-sub">// identity_verify</div>
+    </div>
+
+    <div class="screen-card fade-in">
+      <div class="screen-phone">
+        <div class="screen-ph-box">✅</div>
+        <div class="screen-ph-text">Add screenshot here</div>
+      </div>
+      <div class="screen-name">Checking Eligibility</div>
+      <div class="screen-sub">// eligibility_check</div>
+    </div>
+
+    <div class="screen-card fade-in">
+      <div class="screen-phone">
+        <div class="screen-ph-box">🗳️</div>
+        <div class="screen-ph-text">Add screenshot here</div>
+      </div>
+      <div class="screen-name">Voting Screen</div>
+      <div class="screen-sub">// vote</div>
+    </div>
+
+    <div class="screen-card fade-in">
+      <div class="screen-phone">
+        <div class="screen-ph-box">🎉</div>
+        <div class="screen-ph-text">Add screenshot here</div>
+      </div>
+      <div class="screen-name">Vote Submitted</div>
+      <div class="screen-sub">// vote_submitted</div>
+    </div>
+
+    <div class="screen-card fade-in">
+      <div class="screen-phone">
+        <div class="screen-ph-box">➕</div>
+        <div class="screen-ph-text">Add screenshot here</div>
+      </div>
+      <div class="screen-name">Create Survey</div>
+      <div class="screen-sub">// create_survey</div>
+    </div>
+
+    <div class="screen-card fade-in">
+      <div class="screen-phone">
+        <div class="screen-ph-box">👤</div>
+        <div class="screen-ph-text">Add screenshot here</div>
+      </div>
+      <div class="screen-name">Settings</div>
+      <div class="screen-sub">// settings</div>
+    </div>
+
+    <div class="screen-card fade-in">
+      <div class="screen-phone">
+        <div class="screen-ph-box">OK</div>
+        <div class="screen-ph-text">Add screenshot here</div>
+      </div>
+      <div class="screen-name">Identity Verified</div>
+      <div class="screen-sub">// identity_verified</div>
+    </div>
+
+    <div class="screen-card fade-in">
+      <div class="screen-phone">
+        <div class="screen-ph-box">RV</div>
+        <div class="screen-ph-text">Add screenshot here</div>
+      </div>
+      <div class="screen-name">Review And Submit</div>
+      <div class="screen-sub">// review_submit</div>
+    </div>
+
+    <div class="screen-card fade-in">
+      <div class="screen-phone">
+        <div class="screen-ph-box">MC</div>
+        <div class="screen-ph-text">Add screenshot here</div>
+      </div>
+      <div class="screen-name">My Created Surveys</div>
+      <div class="screen-sub">// my_created_surveys</div>
+    </div>
+
+    <div class="screen-card fade-in">
+      <div class="screen-phone">
+        <div class="screen-ph-box">MP</div>
+        <div class="screen-ph-text">Add screenshot here</div>
+      </div>
+      <div class="screen-name">Participated Surveys</div>
+      <div class="screen-sub">// my_participated_surveys</div>
+    </div>
+
+    <div class="screen-card fade-in">
+      <div class="screen-phone">
+        <div class="screen-ph-box">MS</div>
+        <div class="screen-ph-text">Add screenshot here</div>
+      </div>
+      <div class="screen-name">Manage Survey</div>
+      <div class="screen-sub">// manage_survey</div>
+    </div>
+
+    <div class="screen-card fade-in">
+      <div class="screen-phone">
+        <div class="screen-ph-box">VR</div>
+        <div class="screen-ph-text">Add screenshot here</div>
+      </div>
+      <div class="screen-name">Voter Requirements</div>
+      <div class="screen-sub">// create_survey_requirements</div>
+    </div>
+
+    <div class="screen-card fade-in">
+      <div class="screen-phone">
+        <div class="screen-ph-box">QS</div>
+        <div class="screen-ph-text">Add screenshot here</div>
+      </div>
+      <div class="screen-name">Survey Questions</div>
+      <div class="screen-sub">// create_survey_questions</div>
+    </div>
+
+    <div class="screen-card fade-in">
+      <div class="screen-phone">
+        <div class="screen-ph-box">BG</div>
+        <div class="screen-ph-text">Add screenshot here</div>
+      </div>
+      <div class="screen-name">Survey Budget</div>
+      <div class="screen-sub">// create_survey_budget</div>
+    </div>
+  </div>
+
+  <div class="sprint-modal" id="app-shot-modal" aria-hidden="true">
+    <div class="sprint-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="app-shot-label">
+      <div class="sprint-modal-header">
+        <span class="sprint-modal-label" id="app-shot-label">Screenshot preview</span>
+        <button class="sprint-modal-close" id="app-shot-close" type="button">Close</button>
+      </div>
+      <div class="sprint-modal-body">
+        <img class="sprint-modal-image" id="app-shot-image" src="" alt="">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ARCHITECTURE -->
+<section id="architecture">
+  <div class="eyebrow">03 — System architecture</div>
+  <h2>How it all fits together</h2>
+  <p class="lead">Five components work in sequence — from credential issuance to on-chain vote tallying — with zero personal data exposed at any step.</p>
+
+  <div class="arch-flow">
+    <div class="arch-node fade-in">
+      <div class="arch-node-num">01</div>
+      <div class="arch-node-title">Credential Issuer</div>
+      <ul class="arch-node-items">
+        <li>Issues VC/PID credentials</li>
+        <li>Reviews submitted documents</li>
+        <li>OpenID4VCI flow</li>
+        <li>VCK IssuerAgent</li>
+      </ul>
+      <div class="arch-arrow">→</div>
+    </div>
+    <div class="arch-node fade-in">
+      <div class="arch-node-num">02</div>
+      <div class="arch-node-title">Identity Wallet</div>
+      <ul class="arch-node-items">
+        <li>Stores verifiable credentials</li>
+        <li>Selective disclosure (SD-JWT)</li>
+        <li>Identity key pair generation</li>
+        <li>Signs vote messages</li>
+      </ul>
+      <div class="arch-arrow">→</div>
+    </div>
+    <div class="arch-node fade-in">
+      <div class="arch-node-num">03</div>
+      <div class="arch-node-title">zkDAPP-Survey App</div>
+      <ul class="arch-node-items">
+        <li>Survey creator + voter UI</li>
+        <li>Client-side ZK proof generation</li>
+        <li>Circom circuits</li>
+        <li>React Native</li>
+      </ul>
+      <div class="arch-arrow">→</div>
+    </div>
+    <div class="arch-node fade-in">
+      <div class="arch-node-num">04</div>
+      <div class="arch-node-title">Smart Contracts</div>
+      <ul class="arch-node-items">
+        <li>zk-proof verification</li>
+        <li>Adds voter to census</li>
+        <li>SurvFactory lifecycle</li>
+        <li>Nullifier deduplication</li>
+      </ul>
+      <div class="arch-arrow">→</div>
+    </div>
+    <div class="arch-node fade-in">
+      <div class="arch-node-num">05</div>
+      <div class="arch-node-title">Vocdoni</div>
+      <ul class="arch-node-items">
+        <li>Vochain consensus</li>
+        <li>Nullifier enforcement</li>
+        <li>Vote tallying on-chain</li>
+        <li>Anonymous voting protocol</li>
+      </ul>
+      <div class="arch-arrow">→</div>
+    </div>
+  </div>
+
+</section>
+
+<div class="divider"></div>
+
+<!-- TEAM -->
+<div id="team" class="team-bg">
+  <section style="max-width:1360px; margin:0 auto;">
+    <div class="eyebrow">04 — Our team</div>
+    <h2>The people behind zkDAPP-Survey</h2>
+
+    <div class="supervisor-card">
+      <div class="avatar">IH</div>
+      <div>
+        <div class="sup-label">Supervisor — LS 2025/2026</div>
+        <div class="sup-name">doc. Ing. Ivan Homoliak, PhD</div>
+      </div>
+    </div>
+
+    <div class="team-grid">
+      <div class="team-member fade-in"><div class="avatar">VF</div><div class="member-name">Viktoriia Femiak</div><div class="member-role">team member</div></div>
+      <div class="team-member fade-in"><div class="avatar">AS</div><div class="member-name">Anna Sikalenko</div><div class="member-role">team member</div></div>
+      <div class="team-member fade-in"><div class="avatar">KS</div><div class="member-name">Karolina Skrypova</div><div class="member-role">team member</div></div>
+      <div class="team-member fade-in"><div class="avatar">OF</div><div class="member-name">Oleh Fedunchyk</div><div class="member-role">team member</div></div>
+      <div class="team-member fade-in"><div class="avatar">OS</div><div class="member-name">Oleksandr Sakalosh</div><div class="member-role">team member</div></div>
+      <div class="team-member fade-in"><div class="avatar">YL</div><div class="member-name">Yehor Lykhachov</div><div class="member-role">team member</div></div>
+    </div>
+  </section>
+</div>
+
+<div class="divider"></div>
+
+<!-- SPRINTS -->
+<section id="sprints">
+  <div class="eyebrow">05 — Sprint history</div>
+  <h2>What we built, sprint by sprint</h2>
+  <p class="lead">A two-semester project covering research, design, development, integration, and end-to-end prototyping.</p>
+
+  <details class="sprint-panel fade-in">
+    <summary>
+      <div class="sprint-toggle-copy">
+        <span class="sprint-toggle-label">View sprint details</span>
+        <span class="sprint-toggle-subtitle">Expand the list and preview each sprint export directly on the page.</span>
+      </div>
+      <span class="sprint-toggle-button">View Sprint Details</span>
+    </summary>
+
+    <ul class="sprint-downloads">
+      <li class="sprint-download-item">
+        <span class="sprint-download-name">Sprint 1</span>
+        <button class="sprint-download-link" type="button" data-sprint-image="assets/sprint-results/sprint1.png" data-sprint-label="Sprint 1 export">Show export</button>
+      </li>
+      <li class="sprint-download-item">
+        <span class="sprint-download-name">Sprint 2</span>
+        <button class="sprint-download-link" type="button" data-sprint-image="assets/sprint-results/sprint2.png" data-sprint-label="Sprint 2 export">Show export</button>
+      </li>
+      <li class="sprint-download-item">
+        <span class="sprint-download-name">Sprint 3</span>
+        <button class="sprint-download-link" type="button" data-sprint-image="assets/sprint-results/sprint3.png" data-sprint-label="Sprint 3 export">Show export</button>
+      </li>
+      <li class="sprint-download-item">
+        <span class="sprint-download-name">Sprint 4</span>
+        <button class="sprint-download-link" type="button" data-sprint-image="assets/sprint-results/sprint4.png" data-sprint-label="Sprint 4 export">Show export</button>
+      </li>
+      <li class="sprint-download-item">
+        <span class="sprint-download-name">Sprint 5</span>
+        <button class="sprint-download-link" type="button" data-sprint-image="assets/sprint-results/sprint5.png" data-sprint-label="Sprint 5 export">Show export</button>
+      </li>
+      <li class="sprint-download-item">
+        <span class="sprint-download-name">Sprint 6</span>
+        <button class="sprint-download-link" type="button" data-sprint-image="assets/sprint-results/sprint6.png" data-sprint-label="Sprint 6 export">Show export</button>
+      </li>
+      <li class="sprint-download-item">
+        <span class="sprint-download-name">Sprint 7</span>
+        <button class="sprint-download-link" type="button" data-sprint-image="assets/sprint-results/sprint7.png" data-sprint-label="Sprint 7 export">Show export</button>
+      </li>
+      <li class="sprint-download-item">
+        <span class="sprint-download-name">Sprint 8</span>
+        <button class="sprint-download-link" type="button" data-sprint-image="assets/sprint-results/sprint8.png" data-sprint-label="Sprint 8 export">Show export</button>
+      </li>
+      <li class="sprint-download-item">
+        <span class="sprint-download-name">Sprint 9</span>
+        <button class="sprint-download-link" type="button" data-sprint-image="assets/sprint-results/sprint9.png" data-sprint-label="Sprint 9 export">Show export</button>
+      </li>
+      <li class="sprint-download-item">
+        <span class="sprint-download-name">Sprint 10</span>
+        <button class="sprint-download-link" type="button" data-sprint-image="assets/sprint-results/sprint10.png" data-sprint-label="Sprint 10 export">Show export</button>
+      </li>
+      <li class="sprint-download-item">
+        <span class="sprint-download-name">Sprint 11</span>
+        <button class="sprint-download-link" type="button" data-sprint-image="assets/sprint-results/sprint11.png" data-sprint-label="Sprint 11 export">Show export</button>
+      </li>
+      <li class="sprint-download-item">
+        <span class="sprint-download-name">Sprint 12</span>
+        <button class="sprint-download-link" type="button" data-sprint-image="assets/sprint-results/sprint12.png" data-sprint-label="Sprint 12 export">Show export</button>
+      </li>
+    </ul>
+
+  </details>
+
+  <div class="sprint-modal" id="sprint-modal" aria-hidden="true">
+    <div class="sprint-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="sprint-modal-label">
+      <div class="sprint-modal-header">
+        <span class="sprint-modal-label" id="sprint-modal-label">Sprint export</span>
+        <button class="sprint-modal-close" id="sprint-modal-close" type="button">Close</button>
+      </div>
+      <div class="sprint-modal-body">
+        <img class="sprint-modal-image" id="sprint-modal-image" src="" alt="">
+      </div>
+    </div>
+  </div>
+
+  <div class="sprint-list">
+    <div class="sprint-item fade-in">
+      <div class="sprint-meta">
+        <div class="sprint-number">SPRINT 01</div>
+        <div class="sprint-dates">Oct – Nov 2024</div>
+      </div>
+      <div class="sprint-content">
+        <div class="sprint-title">Research & Technology Exploration</div>
+        <div class="sprint-desc">Deep-dive into zkSNARK primitives, Circom circuit design fundamentals, and the EVM ecosystem. Evaluated zkSNARK libraries (snarkjs, Circom vs. ZoKrates). Surveyed related work in decentralized voting and digital identity. Defined the system threat model and privacy requirements.</div>
+        <div class="sprint-tags"><span class="sprint-tag">zkSNARKs</span><span class="sprint-tag">Research</span><span class="sprint-tag">Threat Model</span></div>
+      </div>
+    </div>
+
+    <div class="sprint-item fade-in">
+      <div class="sprint-meta">
+        <div class="sprint-number">SPRINT 02</div>
+        <div class="sprint-dates">Nov – Dec 2024</div>
+      </div>
+      <div class="sprint-content">
+        <div class="sprint-title">System Design & Architecture</div>
+        <div class="sprint-desc">Designed the high-level platform architecture: credential issuer, Identity wallet integration, smart contract layer, and backend relay. Defined the ZK circuit specification for eligibility proofs. Documented the nullifier-based double-vote prevention and EIP-7702 gas sponsorship model.</div>
+        <div class="sprint-tags"><span class="sprint-tag">Architecture</span><span class="sprint-tag">EIP-7702</span><span class="sprint-tag">ZK Circuits</span></div>
+      </div>
+    </div>
+
+    <div class="sprint-item fade-in">
+      <div class="sprint-meta">
+        <div class="sprint-number">SPRINT 03</div>
+        <div class="sprint-dates">Jan – Feb 2025</div>
+      </div>
+      <div class="sprint-content">
+        <div class="sprint-title">Smart Contracts & Credential Issuer</div>
+        <div class="sprint-desc">Implemented SurvFactory and SurvInstance Solidity contracts with VerifierRegistry and IdentityIssuerRegistry. Built the custom credential issuer with VCK IssuerAgent and OpenID4VCI. Forked the Identity wallet with extended signing capabilities — Poseidon hashing, identity key pair generation.</div>
+        <div class="sprint-tags"><span class="sprint-tag">Solidity</span><span class="sprint-tag">Identity Wallet</span><span class="sprint-tag">Credential Issuance</span><span class="sprint-tag">OpenID4VCI</span></div>
+      </div>
+    </div>
+
+    <div class="sprint-item fade-in">
+      <div class="sprint-meta">
+        <div class="sprint-number">SPRINT 04</div>
+        <div class="sprint-dates">Feb – Mar 2025</div>
+      </div>
+      <div class="sprint-content">
+        <div class="sprint-title">ZK Circuits & Mobile App UI</div>
+        <div class="sprint-desc">Wrote and tested Circom eligibility circuits: VC signature verification via Merkle inclusion proof, attribute range checks (age, region, education), and vote-choice signing. Prototyped the React Native mobile application with all major screens and voting flows.</div>
+        <div class="sprint-tags"><span class="sprint-tag">Circom</span><span class="sprint-tag">React Native</span><span class="sprint-tag">Mobile UI</span></div>
+      </div>
+    </div>
+
+    <div class="sprint-item fade-in">
+      <div class="sprint-meta">
+        <div class="sprint-number">SPRINT 05</div>
+        <div class="sprint-dates">Mar – Apr 2025</div>
+      </div>
+      <div class="sprint-content">
+        <div class="sprint-title">Integration & Backend Relay</div>
+        <div class="sprint-desc">Connected all components end-to-end: Identity Wallet ↔ survey app ↔ backend relay ↔ smart contracts. Implemented the off-chain vote package validator and gas pool reimbursement logic. Integrated Vocdoni protocol for census management and nullifier enforcement. Initial performance tests of client-side proof generation on mobile hardware.</div>
+        <div class="sprint-tags"><span class="sprint-tag">Integration</span><span class="sprint-tag">Vocdoni</span><span class="sprint-tag">Backend Relay</span><span class="sprint-tag">Performance</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<footer>
+  <div class="footer-logo">zkDAPP-Survey · FIIT STU Bratislava</div>
+  <div class="footer-info">
+    <div>Tímový projekt 2025/2026</div>
+  </div>
+</footer>
+
+<script>
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+
+  const sprintModal = document.getElementById('sprint-modal');
+  const sprintModalImage = document.getElementById('sprint-modal-image');
+  const sprintModalLabel = document.getElementById('sprint-modal-label');
+  const sprintModalClose = document.getElementById('sprint-modal-close');
+
+  const closeSprintModal = () => {
+    if (!sprintModal || !sprintModalImage || !sprintModalLabel) return;
+    sprintModal.classList.remove('is-open');
+    sprintModal.setAttribute('aria-hidden', 'true');
+    sprintModalImage.src = '';
+    sprintModalImage.alt = '';
+    sprintModalLabel.textContent = 'Sprint export';
+    document.body.style.overflow = '';
+  };
+
+  document.querySelectorAll('[data-sprint-image]').forEach(button => {
+    button.addEventListener('click', () => {
+      const imageSrc = button.getAttribute('data-sprint-image');
+      const imageLabel = button.getAttribute('data-sprint-label') || 'Sprint export';
+
+      if (!sprintModal || !sprintModalImage || !sprintModalLabel || !imageSrc) return;
+
+      sprintModalImage.src = imageSrc;
+      sprintModalImage.alt = imageLabel;
+      sprintModalLabel.textContent = imageLabel;
+      sprintModal.classList.add('is-open');
+      sprintModal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    });
+  });
+
+  sprintModalClose?.addEventListener('click', closeSprintModal);
+
+  sprintModal?.addEventListener('click', (event) => {
+    if (event.target === sprintModal) closeSprintModal();
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && sprintModal?.classList.contains('is-open')) {
+      closeSprintModal();
+    }
+  });
+
+  const appShotModal = document.getElementById('app-shot-modal');
+  const appShotImage = document.getElementById('app-shot-image');
+  const appShotLabel = document.getElementById('app-shot-label');
+  const appShotClose = document.getElementById('app-shot-close');
+
+  const heroPreviewConfig = [
+    { src: 'assets/screenshots/explore.jpg', label: 'Explore surveys', alt: 'Explore surveys screen' },
+    { src: 'assets/screenshots/home.jpg', label: 'Home dashboard', alt: 'Home dashboard screen' },
+    { src: 'assets/screenshots/vote.jpg', label: 'Voting screen', alt: 'Voting screen' }
+  ];
+
+  const closeAppShotModal = () => {
+    if (!appShotModal || !appShotImage || !appShotLabel) return;
+    appShotModal.classList.remove('is-open');
+    appShotModal.setAttribute('aria-hidden', 'true');
+    appShotImage.src = '';
+    appShotImage.alt = '';
+    appShotLabel.textContent = 'Screenshot preview';
+    document.body.style.overflow = '';
+  };
+
+  const openAppShotModal = (imageSrc, imageLabel) => {
+    if (!appShotModal || !appShotImage || !appShotLabel || !imageSrc) return;
+
+    appShotImage.src = imageSrc;
+    appShotImage.alt = imageLabel;
+    appShotLabel.textContent = imageLabel;
+    appShotModal.classList.add('is-open');
+    appShotModal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  };
+
+  document.querySelectorAll('.hero-phones .hero-phone').forEach((phone, index) => {
+    const config = heroPreviewConfig[index];
+    if (!config) return;
+
+    phone.setAttribute('role', 'button');
+    phone.setAttribute('tabindex', '0');
+    phone.setAttribute('aria-label', `Open ${config.label} screenshot`);
+    phone.innerHTML = `<img class="hero-shot" src="${config.src}" alt="${config.alt}">`;
+
+    const activateHeroPreview = () => openAppShotModal(config.src, config.label);
+
+    phone.addEventListener('click', activateHeroPreview);
+    phone.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        activateHeroPreview();
+      }
+    });
+  });
+
+  document.querySelectorAll('[data-app-image]').forEach(button => {
+    button.addEventListener('click', () => {
+      const imageSrc = button.getAttribute('data-app-image');
+      const imageLabel = button.getAttribute('data-app-label') || 'Screenshot preview';
+      openAppShotModal(imageSrc, imageLabel);
+    });
+  });
+
+  document.querySelectorAll('[data-carousel-target]').forEach(button => {
+    button.addEventListener('click', () => {
+      const targetId = button.getAttribute('data-carousel-target');
+      const direction = button.getAttribute('data-direction');
+      if (!targetId || !direction) return;
+
+      const track = document.getElementById(targetId);
+      const firstCard = track?.querySelector('.screen-card');
+      if (!track || !firstCard) return;
+
+      const gap = parseFloat(window.getComputedStyle(track).gap || '0');
+      const step = firstCard.getBoundingClientRect().width + gap;
+      const left = direction === 'next' ? step : -step;
+
+      track.scrollBy({ left, behavior: 'smooth' });
+    });
+  });
+
+  appShotClose?.addEventListener('click', closeAppShotModal);
+
+  appShotModal?.addEventListener('click', (event) => {
+    if (event.target === appShotModal) closeAppShotModal();
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && appShotModal?.classList.contains('is-open')) {
+      closeAppShotModal();
+    }
+  });
+</script>
+</body>
+</html>
