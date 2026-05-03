@@ -273,126 +273,256 @@
 
   .showcase-inner { max-width: 1360px; margin: 0 auto; padding: 0 2rem; }
 
-  .app-processes {
+  .app-tutorials {
     max-width: 1360px;
-    margin: 0 auto;
+    margin: 1.25rem auto 0;
     padding: 0 2rem;
     display: flex;
     flex-direction: column;
     gap: 1.75rem;
   }
 
-  .app-process {
+  .app-tutorial {
     background: white;
     border: 1px solid var(--gray-200);
-    border-radius: 18px;
-    overflow: hidden;
+    border-radius: 20px;
     box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
+    overflow: hidden;
   }
 
-  .app-process-header {
-    padding: 1.25rem 1.5rem 0.75rem;
-  }
-
-  .app-process-kicker {
-    display: inline-block;
-    font-family: var(--mono);
-    font-size: 0.68rem;
+  .app-tutorial-toggle {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.2rem 1.5rem;
+    cursor: pointer;
+    user-select: none;
+    color: var(--gray-900);
+    font-size: 1.05rem;
     font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--blue);
+    background: white;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .app-tutorial-toggle::-webkit-details-marker { display: none; }
+
+  .app-tutorial-toggle:hover {
+    background: var(--gray-50);
+  }
+
+  .app-tutorial[open] .app-tutorial-toggle {
+    border-bottom: 1px solid var(--gray-200);
+  }
+
+  .app-tutorial-toggle-label {
+    color: inherit;
+  }
+
+  .app-tutorial-toggle-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 999px;
+    border: 1px solid var(--gray-200);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--blue-dark);
+    font-size: 1rem;
+    transition: transform 0.2s, background 0.2s, border-color 0.2s;
+  }
+
+  .app-tutorial-toggle:hover .app-tutorial-toggle-icon {
+    background: var(--blue-light);
+    border-color: var(--blue-mid);
+  }
+
+  .app-tutorial[open] .app-tutorial-toggle-icon {
+    transform: rotate(180deg);
+  }
+
+  .app-tutorial-body {
+    display: grid;
+    grid-template-columns: minmax(420px, 0.7fr) minmax(260px, 0.7fr);
+    gap: 1.5rem;
+    padding: 1.5rem;
+  }
+
+  .app-tutorial.is-reversed .app-tutorial-body {
+    grid-template-columns: minmax(260px, 0.7fr) minmax(420px, 0.7fr);
+  }
+
+  .tutorial-intro {
+    grid-column: 1 / -1;
+    max-width: 920px;
+  }
+
+  .tutorial-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    height: 100%;
+  }
+
+  .tutorial-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--gray-900);
     margin-bottom: 0.45rem;
   }
 
-  .app-process-title {
-    font-size: 1.05rem;
+  .tutorial-desc {
+    font-size: 0.92rem;
+    color: var(--gray-600);
+    line-height: 1.7;
+  }
+
+  .tutorial-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    flex: 1 1 auto;
+    justify-content: space-between;
+  }
+
+  .tutorial-step {
+    appearance: none;
+    width: 100%;
+    flex: 1 1 0;
+    border: 1px solid var(--gray-200);
+    background: var(--gray-50);
+    border-radius: 14px;
+    padding: 0.95rem 1rem;
+    text-align: left;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s, transform 0.2s, box-shadow 0.2s;
+  }
+
+  .tutorial-step:hover {
+    border-color: var(--blue-mid);
+    background: var(--blue-light);
+    transform: translateX(2px);
+  }
+
+  .tutorial-step.is-active {
+    border-color: var(--blue-dark);
+    background: linear-gradient(180deg, #EFF6FF 0%, #DBEAFE 100%);
+    box-shadow: 0 10px 24px rgba(37,99,235,0.12);
+  }
+
+  .tutorial-step:focus-visible {
+    outline: 3px solid var(--blue-mid);
+    outline-offset: 4px;
+  }
+
+  .tutorial-step-num {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 0.65rem;
     font-weight: 700;
-    color: var(--gray-900);
+    color: var(--blue);
     margin-bottom: 0.4rem;
   }
 
-  .app-process-desc {
+  .tutorial-step-title {
+    display: block;
     font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--gray-900);
+    margin-bottom: 0.2rem;
+  }
+
+  .tutorial-step-copy {
+    display: block;
+    font-size: 0.82rem;
     color: var(--gray-600);
-    max-width: 760px;
+    line-height: 1.55;
   }
 
-  .screens-row {
-    display: flex;
-    gap: 2rem;
-    overflow-x: auto;
-    padding: 1rem 0 0;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
-  }
-
-  .screens-row::-webkit-scrollbar { display: none; }
-  .screens-row-primary { display: none; }
-  .screens-row-legacy { display: none; }
-
-  .app-process-carousel {
-    display: grid;
-    grid-template-columns: auto 1fr auto;
-    align-items: center;
-    gap: 1rem;
-    padding: 0 1.25rem 1.5rem;
-  }
-
-  .carousel-arrow {
-    appearance: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 42px;
-    height: 42px;
-    padding: 0;
-    border-radius: 999px;
-    border: 1px solid var(--gray-200);
-    background: var(--gray-50);
-    color: var(--blue-dark);
-    font-size: 1.2rem;
-    line-height: 1;
-    cursor: pointer;
-    transition: background 0.2s, border-color 0.2s, transform 0.2s;
-  }
-
-  .carousel-arrow:hover {
-    background: var(--blue-light);
-    border-color: var(--blue-mid);
-    transform: translateY(-1px);
-  }
-
-  .carousel-arrow:focus-visible {
-    outline: 3px solid var(--blue-mid);
-    outline-offset: 3px;
-  }
-
-  .screen-card {
-    flex-shrink: 0;
-    scroll-snap-align: start;
+  .tutorial-stage {
+    min-width: 0;
     display: flex;
     flex-direction: column;
+    gap: 0.85rem;
     align-items: center;
-    gap: 0.6rem;
-    width: 230px;
+    justify-self: center;
+    width: 100%;
+    height: 100%;
+  }
+
+  .tutorial-stage-frame {
+    display: grid;
+    grid-template-columns: 44px minmax(0, 360px) 44px;
+    align-items: center;
+    gap: 0.75rem;
+    width: fit-content;
+    max-width: 100%;
+    margin: 0 auto;
+    justify-content: center;
+  }
+
+  .tutorial-gallery {
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    width: 100%;
+    flex: 1 1 auto;
+  }
+
+  .tutorial-gallery::-webkit-scrollbar { display: none; }
+
+  .tutorial-card {
+    flex: 0 0 100%;
+    scroll-snap-align: start;
+    border: 1px solid var(--gray-200);
+    border-radius: 18px;
+    background: linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%);
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    max-width: 360px;
+  }
+
+  .tutorial-card-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.8rem;
+  }
+
+  .tutorial-card-step {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--blue);
+  }
+
+  .tutorial-card-title {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--gray-900);
   }
 
   .screen-phone {
     appearance: none;
-    width: 230px;
-    height: 446px;
+    width: 100%;
+    max-width: 240px;
+    margin: 0 auto;
+    height: auto;
+    aspect-ratio: 230 / 446;
     padding: 0;
     border-radius: 22px;
     border: 2px solid var(--gray-200);
     background: var(--gray-100);
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 0.75rem;
     box-shadow: 0 4px 16px rgba(0,0,0,0.06);
     transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
     position: relative;
@@ -406,7 +536,8 @@
     top: 10px;
     left: 50%;
     transform: translateX(-50%);
-    width: 44px; height: 5px;
+    width: 44px;
+    height: 5px;
     background: var(--gray-200);
     border-radius: 3px;
   }
@@ -431,47 +562,79 @@
     background: white;
   }
 
-  .showcase-hint {
-    font-size: 0.82rem;
+  .tutorial-card-copy {
+    font-size: 0.84rem;
     color: var(--gray-600);
-    margin: 0 3rem;
+    line-height: 1.6;
   }
 
-  .showcase-hint-legacy { display: none; }
-
-  .screen-ph-box {
-    width: 56px; height: 56px;
-    border: 2px dashed var(--gray-300);
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-    color: var(--gray-400);
+  .tutorial-arrow {
+    appearance: none;
+    width: 44px;
+    height: 44px;
+    border-radius: 999px;
+    border: 1px solid var(--gray-200);
+    background: var(--gray-50);
+    color: var(--blue-dark);
+    font-size: 1.05rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.2s, opacity 0.2s;
   }
 
-  .screen-ph-text {
-    font-family: var(--mono);
-    font-size: 0.58rem;
-    color: var(--gray-400);
-    text-align: center;
-    padding: 0 1rem;
-    line-height: 1.5;
+  .tutorial-arrow:hover {
+    border-color: var(--blue-mid);
+    background: var(--blue-light);
+    transform: translateY(-1px);
   }
 
-  .screen-name {
-    font-size: 0.82rem;
-    font-weight: 600;
-    color: var(--gray-700);
-    text-align: center;
+  .tutorial-arrow:disabled {
+    opacity: 0.45;
+    cursor: default;
+    transform: none;
   }
 
-  .screen-sub {
-    font-family: var(--mono);
-    font-size: 0.6rem;
-    color: var(--gray-400);
-    text-align: center;
-    margin-top: -0.3rem;
+  .tutorial-arrow:focus-visible {
+    outline: 3px solid var(--blue-mid);
+    outline-offset: 3px;
+  }
+
+  .arch-gallery {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    margin-bottom: 2rem;
+    border: 1px solid var(--gray-200);
+    border-radius: 18px;
+    overflow: hidden;
+    background: white;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
+  }
+
+  .arch-figure {
+    margin: 0;
+  }
+
+  .arch-image {
+    display: block;
+    width: 100%;
+    height: auto;
+    background: var(--gray-50);
+  }
+
+  .arch-image-button {
+    appearance: none;
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: zoom-in;
+  }
+
+  .arch-image-button:focus-visible {
+    outline: 3px solid var(--blue-mid);
+    outline-offset: -3px;
   }
 
   /* ARCHITECTURE */
@@ -812,6 +975,7 @@
     .hero-phone.side { display: none; }
     .hero-phone.main { width: min(78vw, 280px); height: auto; aspect-ratio: 1 / 2; }
     .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .arch-gallery { grid-template-columns: 1fr; }
     .arch-flow { flex-direction: column; }
     .arch-node { border-right: none; border-bottom: 1px solid var(--gray-200); }
     .arch-node:last-child { border-bottom: none; }
@@ -825,12 +989,10 @@
     .sprint-meta { border-right: none; border-bottom: 1px solid var(--gray-200); }
     footer { flex-direction: column; gap: 1rem; text-align: center; }
     .footer-info { text-align: center; }
-    .screens-row { padding: 1rem 1.5rem 1.5rem; }
     .showcase-inner { padding: 0 1.5rem; }
-    .app-processes { padding: 0 1.5rem; }
-    .app-process-header { padding: 1rem 1rem 0.5rem; }
-    .app-process-carousel { grid-template-columns: 1fr; padding: 0 1rem 1rem; }
-    .carousel-arrow { display: none; }
+    .app-tutorials { padding: 0 1.5rem; }
+    .app-tutorial-body { grid-template-columns: 1fr; padding: 1rem; }
+    .tutorial-stage-frame { grid-template-columns: 44px minmax(0, 360px) 44px; gap: 0.5rem; }
   }
 </style>
 </head>
@@ -856,7 +1018,6 @@
     <div class="hero-tags">
       <span class="tag">zkSNARKs</span>
       <span class="tag">Solidity</span>
-      <span class="tag">EIP-7702</span>
       <span class="tag">Verifiable Credentials</span>
       <span class="tag">React Native</span>
       <span class="tag">Vocdoni</span>
@@ -888,14 +1049,13 @@
       <h2>Replacing centralized survey agencies with cryptographic truth</h2>
       <p>Public opinion surveys are a cornerstone of democratic societies, yet centralized agencies suffer from trust and integrity issues. Operators may manipulate samples, suppress results, or fail to prevent <strong>Sybil attacks</strong>.</p>
       <p>zkDAPP-Survey uses <strong>zkSNARK zero-knowledge proofs</strong> to allow any voter to prove eligibility — citizenship, age, region — without revealing their identity. All results are publicly verifiable on-chain.</p>
-      <p>The platform uses a <strong>gas sponsorship model</strong> based on EIP-7702, where survey creators can pre-fund participation for the first N voters. After that sponsored quota is used, the survey remains available and the mobile app still handles all proof generation entirely on-device.</p>
     </div>
     <ul class="goals-list">
       <li class="goal-item fade-in"><span class="goal-num">01</span><span class="goal-text">Eliminate trust in centralized entities by using a public blockchain for transparent vote tallying</span></li>
       <li class="goal-item fade-in"><span class="goal-num">02</span><span class="goal-text">Prevent Sybil attacks through unique user verification based on government-issued verifiable credentials</span></li>
       <li class="goal-item fade-in"><span class="goal-num">03</span><span class="goal-text">Incorporate user attributes — age, geolocation, education — for filtered eligibility and result interpretation</span></li>
       <li class="goal-item fade-in"><span class="goal-num">04</span><span class="goal-text">Maintain full voter privacy using zkSNARKs generated client-side on the voter's smartphone</span></li>
-      <li class="goal-item fade-in"><span class="goal-num">05</span><span class="goal-text">Allow survey creators to sponsor gas costs for the first N participants while keeping the survey open beyond the sponsored quota</span></li>
+      <li class="goal-item fade-in"><span class="goal-num">05</span><span class="goal-text">Keep survey participation accessible while preserving private, client-side proof generation on the voter's smartphone</span></li>
     </ul>
   </div>
 </section>
@@ -906,388 +1066,459 @@
 <div id="app" class="showcase-bg">
   <div class="showcase-inner">
     <div class="eyebrow">02 — Mobile application</div>
-    <h2>How the app looks</h2>
-    <p class="lead">The smartphone app handles the entire voting flow — from identity verification via the Identity wallet, through client-side zkSNARK proof generation, to anonymous vote submission on-chain.</p>
+    <h2>How To Use The App</h2>
+    <p class="lead">Follow the core user flows step by step: first add credentials to Valera, then register for a vote, cast a private ballot, and finally create a survey with the guided builder.</p>
   </div>
 
-  <div class="app-processes">
-    <div class="app-process fade-in">
-      <div class="app-process-header">
-        <div class="app-process-kicker">Process 01</div>
-        <div class="app-process-title">Discover And Vote</div>
-        <div class="app-process-desc">Browse surveys, inspect details, verify identity, generate eligibility proofs, and submit an anonymous vote.</div>
+  <div class="app-tutorials">
+    <details class="app-tutorial fade-in" open>
+      <summary class="app-tutorial-toggle">
+        <span class="app-tutorial-toggle-label">How To Add Credentials To Valera</span>
+        <span class="app-tutorial-toggle-icon">&#9662;</span>
+      </summary>
+      <div class="app-tutorial-body">
+      <div class="tutorial-intro">
+        <div>
+          <div class="tutorial-desc">This flow shows how credentials are requested and added to Valera during testing. In our demo setup, the app sends the request to our own `FIIssuer`, which verifies the submitted information and decides whether the credential should be issued.</div>
+        </div>
       </div>
-      <div class="app-process-carousel">
-        <button class="carousel-arrow" type="button" data-carousel-target="process-discover" data-direction="prev" aria-label="Previous discover and vote screenshots">&#8249;</button>
-        <div class="screens-row" id="process-discover">
-        <div class="screen-card fade-in">
-          <button class="screen-phone" type="button" data-app-image="assets/screenshots/explore.jpg" data-app-label="Explore surveys">
-            <img class="screen-shot" src="assets/screenshots/explore.jpg" alt="Explore surveys screen">
+      <div class="tutorial-sidebar">
+        <div class="tutorial-steps" data-step-group="tutorial-valera-gallery">
+          <button class="tutorial-step is-active" type="button" data-step-target="tutorial-valera-gallery" data-step-index="0">
+            <span class="tutorial-step-num">Step 01</span>
+            <span class="tutorial-step-title">Start from the home page</span>
+            <span class="tutorial-step-copy">Open Valera and begin the flow from the main screen, where you tap `Load Data` to start adding a credential.</span>
           </button>
-          <div class="screen-name">Explore Surveys</div>
-        </div>
-
-        <div class="screen-card fade-in">
-          <button class="screen-phone" type="button" data-app-image="assets/screenshots/survey-details.jpg" data-app-label="Survey detail">
-            <img class="screen-shot" src="assets/screenshots/survey-details.jpg" alt="Survey detail screen">
+          <button class="tutorial-step" type="button" data-step-target="tutorial-valera-gallery" data-step-index="1">
+            <span class="tutorial-step-num">Step 02</span>
+            <span class="tutorial-step-title">Choose the issuer</span>
+            <span class="tutorial-step-copy">Select which issuer should process the request. In our testing environment, this is `FIIssuer`.</span>
           </button>
-          <div class="screen-name">Survey Detail</div>
-        </div>
-
-        <div class="screen-card fade-in">
-          <button class="screen-phone" type="button" data-app-image="assets/screenshots/verify-your-identity.jpg" data-app-label="Verify identity">
-            <img class="screen-shot" src="assets/screenshots/verify-your-identity.jpg" alt="Verify identity screen">
+          <button class="tutorial-step" type="button" data-step-target="tutorial-valera-gallery" data-step-index="2">
+            <span class="tutorial-step-num">Step 03</span>
+            <span class="tutorial-step-title">Fill credential information</span>
+            <span class="tutorial-step-copy">Choose the credential type, upload the passport photo, and provide the personal information required for the request.</span>
           </button>
-          <div class="screen-name">Verify Identity</div>
-        </div>
-
-        <div class="screen-card fade-in">
-          <button class="screen-phone" type="button" data-app-image="assets/screenshots/checking-eligibility.jpg" data-app-label="Checking eligibility">
-            <img class="screen-shot" src="assets/screenshots/checking-eligibility.jpg" alt="Checking eligibility screen">
+          <button class="tutorial-step" type="button" data-step-target="tutorial-valera-gallery" data-step-index="3">
+            <span class="tutorial-step-num">Step 04</span>
+            <span class="tutorial-step-title">Confirm the request</span>
+            <span class="tutorial-step-copy">Review the submitted information and send the request to the issuer for verification.</span>
           </button>
-          <div class="screen-name">Checking Eligibility</div>
-        </div>
-
-        <div class="screen-card fade-in">
-          <button class="screen-phone" type="button" data-app-image="assets/screenshots/identity-verified.jpg" data-app-label="Identity verified">
-            <img class="screen-shot" src="assets/screenshots/identity-verified.jpg" alt="Identity verified screen">
+          <button class="tutorial-step" type="button" data-step-target="tutorial-valera-gallery" data-step-index="4">
+            <span class="tutorial-step-num">Step 05</span>
+            <span class="tutorial-step-title">Receive the approved credential</span>
+            <span class="tutorial-step-copy">`FIIssuer` verifies the submitted data and, if the request is accepted, returns the approved credential to Valera.</span>
           </button>
-          <div class="screen-name">Identity Verified</div>
         </div>
+      </div>
+      <div class="tutorial-stage">
+        <div class="tutorial-stage-frame">
+          <button class="tutorial-arrow" type="button" data-arrow-target="tutorial-valera-gallery" data-arrow-direction="prev" aria-label="Previous credential screenshot">&#8249;</button>
+          <div class="tutorial-gallery" id="tutorial-valera-gallery">
+            <article class="tutorial-card fade-in" data-tutorial-card>
+              <div class="tutorial-card-head">
+                <span class="tutorial-card-step">Step 01</span>
+                <span class="tutorial-card-title">Home Page</span>
+              </div>
+              <button class="screen-phone" type="button" data-app-image="assets/valera/home_page.png" data-app-label="Valera home page">
+                <img class="screen-shot" src="assets/valera/home_page.png" alt="Valera home page screen">
+              </button>
+              <div class="tutorial-card-copy">Start from the Valera home page and tap `Load Data` to begin adding a new credential.</div>
+            </article>
+            <article class="tutorial-card fade-in" data-tutorial-card>
+              <div class="tutorial-card-head">
+                <span class="tutorial-card-step">Step 02</span>
+                <span class="tutorial-card-title">Choose FIIssuer</span>
+              </div>
+              <button class="screen-phone" type="button" data-app-image="assets/valera/load_data.png" data-app-label="Valera choose issuer">
+                <img class="screen-shot" src="assets/valera/load_data.png" alt="Valera choose issuer screen">
+              </button>
+              <div class="tutorial-card-copy">Select `FIIssuer` as the source that will evaluate and issue the credential in the demo environment.</div>
+            </article>
+            <article class="tutorial-card fade-in" data-tutorial-card>
+              <div class="tutorial-card-head">
+                <span class="tutorial-card-step">Step 03</span>
+                <span class="tutorial-card-title">Credential Information</span>
+              </div>
+              <button class="screen-phone" type="button" data-app-image="assets/valera/credential_info.png" data-app-label="Valera credential information">
+                <img class="screen-shot" src="assets/valera/credential_info.png" alt="Valera credential information screen">
+              </button>
+              <div class="tutorial-card-copy">Select the credential type, upload the passport image, and enter the personal details required for verification.</div>
+            </article>
+            <article class="tutorial-card fade-in" data-tutorial-card>
+              <div class="tutorial-card-head">
+                <span class="tutorial-card-step">Step 04</span>
+                <span class="tutorial-card-title">Request Confirmation</span>
+              </div>
+              <button class="screen-phone" type="button" data-app-image="assets/valera/request_confirmation.png" data-app-label="Valera request confirmation">
+                <img class="screen-shot" src="assets/valera/request_confirmation.png" alt="Valera request confirmation screen">
+              </button>
+              <div class="tutorial-card-copy">Review the request and confirm that it should be sent to the issuer for evaluation.</div>
+            </article>
+            <article class="tutorial-card fade-in" data-tutorial-card>
+              <div class="tutorial-card-head">
+                <span class="tutorial-card-step">Step 05</span>
+                <span class="tutorial-card-title">Approved Credential</span>
+              </div>
+              <button class="screen-phone" type="button" data-app-image="assets/valera/approved_credential.png" data-app-label="Valera approved credential">
+                <img class="screen-shot" src="assets/valera/approved_credential.png" alt="Valera approved credential screen">
+              </button>
+              <div class="tutorial-card-copy">If `FIIssuer` approves the request, the issued credential is returned and becomes available in Valera.</div>
+            </article>
+          </div>
+          <button class="tutorial-arrow" type="button" data-arrow-target="tutorial-valera-gallery" data-arrow-direction="next" aria-label="Next credential screenshot">&#8250;</button>
+        </div>
+      </div>
+      </div>
+    </details>
 
-        <div class="screen-card fade-in">
-          <button class="screen-phone" type="button" data-app-image="assets/screenshots/vote.jpg" data-app-label="Voting screen">
-            <img class="screen-shot" src="assets/screenshots/vote.jpg" alt="Voting screen">
+    <details class="app-tutorial is-reversed fade-in" open>
+      <summary class="app-tutorial-toggle">
+        <span class="app-tutorial-toggle-label">How To Register For Voting</span>
+        <span class="app-tutorial-toggle-icon">&#9662;</span>
+      </summary>
+      <div class="app-tutorial-body">
+      <div class="tutorial-intro">
+        <div>
+          <div class="tutorial-desc">This flow shows how a participant registers for a survey before voting. The app first detects that the user is not yet registered, then guides them through authentication and selective disclosure of the credential data required for enrollment.</div>
+        </div>
+      </div>
+      <div class="tutorial-stage">
+        <div class="tutorial-stage-frame">
+          <button class="tutorial-arrow" type="button" data-arrow-target="tutorial-register-gallery" data-arrow-direction="prev" aria-label="Previous registration screenshot">&#8249;</button>
+          <div class="tutorial-gallery" id="tutorial-register-gallery">
+            <article class="tutorial-card fade-in" data-tutorial-card>
+              <div class="tutorial-card-head">
+                <span class="tutorial-card-step">Step 01</span>
+                <span class="tutorial-card-title">Open The Survey</span>
+              </div>
+              <button class="screen-phone" type="button" data-app-image="assets/screenshots/register_voting/1explore_not_registered.png" data-app-label="Survey not registered">
+                <img class="screen-shot" src="assets/screenshots/register_voting/1explore_not_registered.png" alt="Survey screen showing the user is not registered">
+              </button>
+              <div class="tutorial-card-copy">Start from the survey view where the app indicates that the current account still needs to register before voting.</div>
+            </article>
+            <article class="tutorial-card fade-in" data-tutorial-card>
+              <div class="tutorial-card-head">
+                <span class="tutorial-card-step">Step 02</span>
+                <span class="tutorial-card-title">Begin Registration</span>
+              </div>
+              <button class="screen-phone" type="button" data-app-image="assets/screenshots/register_voting/2registration_1.png" data-app-label="Start vote registration">
+                <img class="screen-shot" src="assets/screenshots/register_voting/2registration_1.png" alt="Vote registration start screen">
+              </button>
+              <div class="tutorial-card-copy">Open the registration flow and review the initial information shown before the app requests proof data.</div>
+            </article>
+            <article class="tutorial-card fade-in" data-tutorial-card>
+              <div class="tutorial-card-head">
+                <span class="tutorial-card-step">Step 03</span>
+                <span class="tutorial-card-title">Authenticate</span>
+              </div>
+              <button class="screen-phone" type="button" data-app-image="assets/screenshots/register_voting/3authenticate.png" data-app-label="Authenticate for registration">
+                <img class="screen-shot" src="assets/screenshots/register_voting/3authenticate.png" alt="Authentication screen for vote registration">
+              </button>
+              <div class="tutorial-card-copy">Confirm your identity in the wallet flow so the app can proceed with the credential checks needed for registration.</div>
+            </article>
+            <article class="tutorial-card fade-in" data-tutorial-card>
+              <div class="tutorial-card-head">
+                <span class="tutorial-card-step">Step 04</span>
+                <span class="tutorial-card-title">Choose A Credential</span>
+              </div>
+              <button class="screen-phone" type="button" data-app-image="assets/screenshots/register_voting/4choose_credential.png" data-app-label="Choose credential for registration">
+                <img class="screen-shot" src="assets/screenshots/register_voting/4choose_credential.png" alt="Choose credential screen for registration">
+              </button>
+              <div class="tutorial-card-copy">Select which credential should be used to prove that you satisfy the survey's eligibility requirements.</div>
+            </article>
+            <article class="tutorial-card fade-in" data-tutorial-card>
+              <div class="tutorial-card-head">
+                <span class="tutorial-card-step">Step 05</span>
+                <span class="tutorial-card-title">Disclose Required Data</span>
+              </div>
+              <button class="screen-phone" type="button" data-app-image="assets/screenshots/register_voting/5disclose_data.png" data-app-label="Disclose registration data">
+                <img class="screen-shot" src="assets/screenshots/register_voting/5disclose_data.png" alt="Disclose data screen for registration">
+              </button>
+              <div class="tutorial-card-copy">Approve disclosure of the required fields so the app can complete registration without exposing anything beyond the requested attributes.</div>
+            </article>
+          </div>
+          <button class="tutorial-arrow" type="button" data-arrow-target="tutorial-register-gallery" data-arrow-direction="next" aria-label="Next registration screenshot">&#8250;</button>
+        </div>
+      </div>
+      <div class="tutorial-sidebar">
+        <div class="tutorial-steps" data-step-group="tutorial-register-gallery">
+          <button class="tutorial-step is-active" type="button" data-step-target="tutorial-register-gallery" data-step-index="0">
+            <span class="tutorial-step-num">Step 01</span>
+            <span class="tutorial-step-title">Find a survey that needs registration</span>
+            <span class="tutorial-step-copy">Open the survey you want to join and check the status shown for the current account.</span>
           </button>
-          <div class="screen-name">Voting Screen</div>
-        </div>
-
-        <div class="screen-card fade-in">
-          <button class="screen-phone" type="button" data-app-image="assets/screenshots/submitted-vote.jpg" data-app-label="Vote submitted">
-            <img class="screen-shot" src="assets/screenshots/submitted-vote.jpg" alt="Vote submitted screen">
+          <button class="tutorial-step" type="button" data-step-target="tutorial-register-gallery" data-step-index="1">
+            <span class="tutorial-step-num">Step 02</span>
+            <span class="tutorial-step-title">Start the enrollment flow</span>
+            <span class="tutorial-step-copy">Launch registration from the survey screen to move into the guided setup process.</span>
           </button>
-          <div class="screen-name">Vote Submitted</div>
-        </div>
-        </div>
-        <button class="carousel-arrow" type="button" data-carousel-target="process-discover" data-direction="next" aria-label="Next discover and vote screenshots">&#8250;</button>
-      </div>
-    </div>
-
-    <div class="app-process fade-in">
-      <div class="app-process-header">
-        <div class="app-process-kicker">Process 02</div>
-        <div class="app-process-title">Create A Survey</div>
-        <div class="app-process-desc">Move through the survey builder, define eligible voters, prepare questions, allocate budget, and review before launch.</div>
-      </div>
-      <div class="app-process-carousel">
-        <button class="carousel-arrow" type="button" data-carousel-target="process-create" data-direction="prev" aria-label="Previous create survey screenshots">&#8249;</button>
-        <div class="screens-row" id="process-create">
-        <div class="screen-card fade-in">
-          <button class="screen-phone" type="button" data-app-image="assets/screenshots/create-survey.jpg" data-app-label="Create survey">
-            <img class="screen-shot" src="assets/screenshots/create-survey.jpg" alt="Create survey screen">
+          <button class="tutorial-step" type="button" data-step-target="tutorial-register-gallery" data-step-index="2">
+            <span class="tutorial-step-num">Step 03</span>
+            <span class="tutorial-step-title">Authenticate in the wallet</span>
+            <span class="tutorial-step-copy">Approve the authentication step so the app can continue with secure credential-based registration.</span>
           </button>
-          <div class="screen-name">Create Survey</div>
-        </div>
-
-        <div class="screen-card fade-in">
-          <button class="screen-phone" type="button" data-app-image="assets/screenshots/create-survey-voter-requirement.jpg" data-app-label="Voter requirements">
-            <img class="screen-shot" src="assets/screenshots/create-survey-voter-requirement.jpg" alt="Voter requirements screen">
+          <button class="tutorial-step" type="button" data-step-target="tutorial-register-gallery" data-step-index="3">
+            <span class="tutorial-step-num">Step 04</span>
+            <span class="tutorial-step-title">Select the credential to use</span>
+            <span class="tutorial-step-copy">Choose the credential that matches the survey rules and should be used as the source of proof.</span>
           </button>
-          <div class="screen-name">Voter Requirements</div>
-        </div>
-
-        <div class="screen-card fade-in">
-          <button class="screen-phone" type="button" data-app-image="assets/screenshots/create-survey-questions.jpg" data-app-label="Survey questions">
-            <img class="screen-shot" src="assets/screenshots/create-survey-questions.jpg" alt="Survey questions screen">
+          <button class="tutorial-step" type="button" data-step-target="tutorial-register-gallery" data-step-index="4">
+            <span class="tutorial-step-num">Step 05</span>
+            <span class="tutorial-step-title">Confirm the disclosed attributes</span>
+            <span class="tutorial-step-copy">Review the requested fields and allow only the data needed to finish registration for the survey.</span>
           </button>
-          <div class="screen-name">Survey Questions</div>
         </div>
+      </div>
+      </div>
+    </details>
 
-        <div class="screen-card fade-in">
-          <button class="screen-phone" type="button" data-app-image="assets/screenshots/create-survey-budget.jpg" data-app-label="Survey budget">
-            <img class="screen-shot" src="assets/screenshots/create-survey-budget.jpg" alt="Survey budget screen">
+    <details class="app-tutorial fade-in" open>
+      <summary class="app-tutorial-toggle">
+        <span class="app-tutorial-toggle-label">How To Vote</span>
+        <span class="app-tutorial-toggle-icon">&#9662;</span>
+      </summary>
+      <div class="app-tutorial-body">
+      <div class="tutorial-intro">
+        <div>
+          <div class="tutorial-desc">A guided flow for participants, from finding a survey to submitting a private vote on-chain.</div>
+        </div>
+      </div>
+      <div class="tutorial-sidebar">
+        <div class="tutorial-steps" data-step-group="tutorial-vote-gallery">
+          <button class="tutorial-step is-active" type="button" data-step-target="tutorial-vote-gallery" data-step-index="0">
+            <span class="tutorial-step-num">Step 01</span>
+            <span class="tutorial-step-title">Open available surveys</span>
+            <span class="tutorial-step-copy">Start in the survey list and choose the poll you want to participate in.</span>
           </button>
-          <div class="screen-name">Survey Budget</div>
-        </div>
-
-        <div class="screen-card fade-in">
-          <button class="screen-phone" type="button" data-app-image="assets/screenshots/review-submit.jpg" data-app-label="Review and submit">
-            <img class="screen-shot" src="assets/screenshots/review-submit.jpg" alt="Review and submit screen">
+          <button class="tutorial-step" type="button" data-step-target="tutorial-vote-gallery" data-step-index="1">
+            <span class="tutorial-step-num">Step 02</span>
+            <span class="tutorial-step-title">Review survey details</span>
+            <span class="tutorial-step-copy">Read the description, eligibility rules, and question summary before continuing.</span>
           </button>
-          <div class="screen-name">Review And Submit</div>
-        </div>
-        </div>
-        <button class="carousel-arrow" type="button" data-carousel-target="process-create" data-direction="next" aria-label="Next create survey screenshots">&#8250;</button>
-      </div>
-    </div>
-
-    <div class="app-process fade-in">
-      <div class="app-process-header">
-        <div class="app-process-kicker">Process 03</div>
-        <div class="app-process-title">Manage Surveys And Account</div>
-        <div class="app-process-desc">Use the dashboard to review your surveys, monitor participation, manage active campaigns, and handle account settings.</div>
-      </div>
-      <div class="app-process-carousel">
-        <button class="carousel-arrow" type="button" data-carousel-target="process-manage" data-direction="prev" aria-label="Previous manage participation screenshots">&#8249;</button>
-        <div class="screens-row" id="process-manage">
-        <div class="screen-card fade-in">
-          <button class="screen-phone" type="button" data-app-image="assets/screenshots/home.jpg" data-app-label="Home dashboard">
-            <img class="screen-shot" src="assets/screenshots/home.jpg" alt="Home dashboard screen">
+          <button class="tutorial-step" type="button" data-step-target="tutorial-vote-gallery" data-step-index="2">
+            <span class="tutorial-step-num">Step 03</span>
+            <span class="tutorial-step-title">Verify your identity</span>
+            <span class="tutorial-step-copy">Connect through the identity flow so the app can prove eligibility without exposing personal data.</span>
           </button>
-          <div class="screen-name">Home Dashboard</div>
-        </div>
-
-        <div class="screen-card fade-in">
-          <button class="screen-phone" type="button" data-app-image="assets/screenshots/my-created-surveys.jpg" data-app-label="My created surveys">
-            <img class="screen-shot" src="assets/screenshots/my-created-surveys.jpg" alt="My created surveys screen">
+          <button class="tutorial-step" type="button" data-step-target="tutorial-vote-gallery" data-step-index="3">
+            <span class="tutorial-step-num">Step 04</span>
+            <span class="tutorial-step-title">Generate the eligibility proof</span>
+            <span class="tutorial-step-copy">The app checks your credentials locally and prepares the zero-knowledge proof on-device.</span>
           </button>
-          <div class="screen-name">My Created Surveys</div>
-        </div>
-
-        <div class="screen-card fade-in">
-          <button class="screen-phone" type="button" data-app-image="assets/screenshots/my-participated-surveys.jpg" data-app-label="Participated surveys">
-            <img class="screen-shot" src="assets/screenshots/my-participated-surveys.jpg" alt="Participated surveys screen">
+          <button class="tutorial-step" type="button" data-step-target="tutorial-vote-gallery" data-step-index="4">
+            <span class="tutorial-step-num">Step 05</span>
+            <span class="tutorial-step-title">Cast the vote</span>
+            <span class="tutorial-step-copy">Choose your answer and submit the anonymized vote package to the network.</span>
           </button>
-          <div class="screen-name">Participated Surveys</div>
-        </div>
-
-        <div class="screen-card fade-in">
-          <button class="screen-phone" type="button" data-app-image="assets/screenshots/manage-survey.jpg" data-app-label="Manage survey">
-            <img class="screen-shot" src="assets/screenshots/manage-survey.jpg" alt="Manage survey screen">
+          <button class="tutorial-step" type="button" data-step-target="tutorial-vote-gallery" data-step-index="5">
+            <span class="tutorial-step-num">Step 06</span>
+            <span class="tutorial-step-title">See the confirmation</span>
+            <span class="tutorial-step-copy">A final confirmation screen shows the vote was accepted and recorded.</span>
           </button>
-          <div class="screen-name">Manage Survey</div>
         </div>
+      </div>
+      <div class="tutorial-stage">
+        <div class="tutorial-stage-frame">
+          <button class="tutorial-arrow" type="button" data-arrow-target="tutorial-vote-gallery" data-arrow-direction="prev" aria-label="Previous voting screenshot">&#8249;</button>
+          <div class="tutorial-gallery" id="tutorial-vote-gallery">
+            <article class="tutorial-card fade-in" data-tutorial-card>
+              <div class="tutorial-card-head">
+                <span class="tutorial-card-step">Step 01</span>
+                <span class="tutorial-card-title">Explore Surveys</span>
+              </div>
+              <button class="screen-phone" type="button" data-app-image="assets/screenshots/explore.jpg" data-app-label="Explore surveys">
+                <img class="screen-shot" src="assets/screenshots/explore.jpg" alt="Explore surveys screen">
+              </button>
+              <div class="tutorial-card-copy">Browse active surveys and pick the one you want to answer.</div>
+            </article>
+            <article class="tutorial-card fade-in" data-tutorial-card>
+              <div class="tutorial-card-head">
+                <span class="tutorial-card-step">Step 02</span>
+                <span class="tutorial-card-title">Survey Detail</span>
+              </div>
+              <button class="screen-phone" type="button" data-app-image="assets/screenshots/survey-details.jpg" data-app-label="Survey detail">
+                <img class="screen-shot" src="assets/screenshots/survey-details.jpg" alt="Survey detail screen">
+              </button>
+              <div class="tutorial-card-copy">Inspect the poll before voting so the context and requirements are clear.</div>
+            </article>
+            <article class="tutorial-card fade-in" data-tutorial-card>
+              <div class="tutorial-card-head">
+                <span class="tutorial-card-step">Step 03</span>
+                <span class="tutorial-card-title">Verify Identity</span>
+              </div>
+              <button class="screen-phone" type="button" data-app-image="assets/screenshots/verify-your-identity.jpg" data-app-label="Verify identity">
+                <img class="screen-shot" src="assets/screenshots/verify-your-identity.jpg" alt="Verify identity screen">
+              </button>
+              <div class="tutorial-card-copy">Launch the identity check to prove you belong to the eligible voter set.</div>
+            </article>
+            <article class="tutorial-card fade-in" data-tutorial-card>
+              <div class="tutorial-card-head">
+                <span class="tutorial-card-step">Step 04</span>
+                <span class="tutorial-card-title">Checking Eligibility</span>
+              </div>
+              <button class="screen-phone" type="button" data-app-image="assets/screenshots/checking-eligibility.jpg" data-app-label="Checking eligibility">
+                <img class="screen-shot" src="assets/screenshots/checking-eligibility.jpg" alt="Checking eligibility screen">
+              </button>
+              <div class="tutorial-card-copy">The mobile app generates and validates the proof locally before unlocking the ballot.</div>
+            </article>
+            <article class="tutorial-card fade-in" data-tutorial-card>
+              <div class="tutorial-card-head">
+                <span class="tutorial-card-step">Step 05</span>
+                <span class="tutorial-card-title">Voting Screen</span>
+              </div>
+              <button class="screen-phone" type="button" data-app-image="assets/screenshots/vote.jpg" data-app-label="Voting screen">
+                <img class="screen-shot" src="assets/screenshots/vote/vote.jpge.jpg" alt="Voting screen">
+              </button>
+              <div class="tutorial-card-copy">Select the answer and submit it without exposing your identity.</div>
+            </article>
+            <article class="tutorial-card fade-in" data-tutorial-card>
+              <div class="tutorial-card-head">
+                <span class="tutorial-card-step">Step 06</span>
+                <span class="tutorial-card-title">Vote Submitted</span>
+              </div>
+              <button class="screen-phone" type="button" data-app-image="assets/screenshots/submitted-vote.jpg" data-app-label="Vote submitted">
+                <img class="screen-shot" src="assets/screenshots/submitted-vote.jpg" alt="Vote submitted screen">
+              </button>
+              <div class="tutorial-card-copy">The final state confirms the anonymous vote has been processed.</div>
+            </article>
+          </div>
+          <button class="tutorial-arrow" type="button" data-arrow-target="tutorial-vote-gallery" data-arrow-direction="next" aria-label="Next voting screenshot">&#8250;</button>
+        </div>
+      </div>
+      </div>
+    </details>
 
-        <div class="screen-card fade-in">
-          <button class="screen-phone" type="button" data-app-image="assets/screenshots/settings.jpg" data-app-label="Settings">
-            <img class="screen-shot" src="assets/screenshots/settings.jpg" alt="Settings screen">
+    <details class="app-tutorial is-reversed fade-in" open>
+      <summary class="app-tutorial-toggle">
+        <span class="app-tutorial-toggle-label">How To Create A Survey</span>
+        <span class="app-tutorial-toggle-icon">&#9662;</span>
+      </summary>
+      <div class="app-tutorial-body">
+      <div class="tutorial-intro">
+        <div>
+          <div class="tutorial-desc">A guided flow for organizers, from opening the survey area to reviewing the final state after the survey is created and waiting to start.</div>
+        </div>
+      </div>
+      <div class="tutorial-stage">
+        <div class="tutorial-stage-frame">
+          <button class="tutorial-arrow" type="button" data-arrow-target="tutorial-create-gallery" data-arrow-direction="prev" aria-label="Previous survey creation screenshot">&#8249;</button>
+          <div class="tutorial-gallery" id="tutorial-create-gallery">
+            <article class="tutorial-card fade-in" data-tutorial-card>
+              <div class="tutorial-card-head">
+                <span class="tutorial-card-step">Step 01</span>
+                <span class="tutorial-card-title">My Surveys</span>
+              </div>
+              <button class="screen-phone" type="button" data-app-image="assets/screenshots/create-survey/1-mysurveys.png" data-app-label="My surveys">
+                <img class="screen-shot" src="assets/screenshots/create-survey/1-mysurveys.png" alt="My surveys screen">
+              </button>
+              <div class="tutorial-card-copy">Open the organizer area and start from the surveys list where existing and draft surveys are managed.</div>
+            </article>
+            <article class="tutorial-card fade-in" data-tutorial-card>
+              <div class="tutorial-card-head">
+                <span class="tutorial-card-step">Step 02</span>
+                <span class="tutorial-card-title">Create Survey</span>
+              </div>
+              <button class="screen-phone" type="button" data-app-image="assets/screenshots/create-survey/2-createsurvey.png" data-app-label="Create survey form">
+                <img class="screen-shot" src="assets/screenshots/create-survey/2-createsurvey.png" alt="Create survey form screen">
+              </button>
+              <div class="tutorial-card-copy">Enter the core survey information to begin the setup process for a new voting flow.</div>
+            </article>
+            <article class="tutorial-card fade-in" data-tutorial-card>
+              <div class="tutorial-card-head">
+                <span class="tutorial-card-step">Step 03</span>
+                <span class="tutorial-card-title">Survey Questions</span>
+              </div>
+              <button class="screen-phone" type="button" data-app-image="assets/screenshots/create-survey/3-survey-questions.png" data-app-label="Survey questions">
+                <img class="screen-shot" src="assets/screenshots/create-survey/3-survey-questions.png" alt="Survey questions screen">
+              </button>
+              <div class="tutorial-card-copy">Write the prompts and structure the voting options the audience will receive.</div>
+            </article>
+            <article class="tutorial-card fade-in" data-tutorial-card>
+              <div class="tutorial-card-head">
+                <span class="tutorial-card-step">Step 04</span>
+                <span class="tutorial-card-title">Voter Requirements</span>
+              </div>
+              <button class="screen-phone" type="button" data-app-image="assets/screenshots/create-survey/4-voter-requirements.png" data-app-label="Voter requirements">
+                <img class="screen-shot" src="assets/screenshots/create-survey/4-voter-requirements.png" alt="Voter requirements screen">
+              </button>
+              <div class="tutorial-card-copy">Define who is allowed to participate by selecting the credential-backed requirements for the survey.</div>
+            </article>
+            <article class="tutorial-card fade-in" data-tutorial-card>
+              <div class="tutorial-card-head">
+                <span class="tutorial-card-step">Step 05</span>
+                <span class="tutorial-card-title">Review Survey</span>
+              </div>
+              <button class="screen-phone" type="button" data-app-image="assets/screenshots/create-survey/5-review-survey.png" data-app-label="Review survey">
+                <img class="screen-shot" src="assets/screenshots/create-survey/5-review-survey.png" alt="Review survey screen">
+              </button>
+              <div class="tutorial-card-copy">Inspect the complete summary and make sure the survey configuration is correct before submitting it.</div>
+            </article>
+            <article class="tutorial-card fade-in" data-tutorial-card>
+              <div class="tutorial-card-head">
+                <span class="tutorial-card-step">Step 06</span>
+                <span class="tutorial-card-title">Survey Created</span>
+              </div>
+              <button class="screen-phone" type="button" data-app-image="assets/screenshots/create-survey/6-survey-created.png" data-app-label="Survey created">
+                <img class="screen-shot" src="assets/screenshots/create-survey/6-survey-created.png" alt="Survey created screen">
+              </button>
+              <div class="tutorial-card-copy">Submit the setup and confirm that the survey has been created successfully in the organizer flow.</div>
+            </article>
+            <article class="tutorial-card fade-in" data-tutorial-card>
+              <div class="tutorial-card-head">
+                <span class="tutorial-card-step">Step 07</span>
+                <span class="tutorial-card-title">Pending Start</span>
+              </div>
+              <button class="screen-phone" type="button" data-app-image="assets/screenshots/create-survey/7-pending-start.png" data-app-label="Pending start">
+                <img class="screen-shot" src="assets/screenshots/create-survey/7-pending-start.png" alt="Pending start screen">
+              </button>
+              <div class="tutorial-card-copy">Return to the survey list and verify that the new survey appears in its waiting state before voting begins.</div>
+            </article>
+          </div>
+          <button class="tutorial-arrow" type="button" data-arrow-target="tutorial-create-gallery" data-arrow-direction="next" aria-label="Next survey creation screenshot">&#8250;</button>
+        </div>
+      </div>
+      <div class="tutorial-sidebar">
+        <div class="tutorial-steps" data-step-group="tutorial-create-gallery">
+          <button class="tutorial-step is-active" type="button" data-step-target="tutorial-create-gallery" data-step-index="0">
+            <span class="tutorial-step-num">Step 01</span>
+            <span class="tutorial-step-title">Open the surveys area</span>
+            <span class="tutorial-step-copy">Start from the organizer view where your created and pending surveys are listed.</span>
           </button>
-          <div class="screen-name">Settings</div>
+          <button class="tutorial-step" type="button" data-step-target="tutorial-create-gallery" data-step-index="1">
+            <span class="tutorial-step-num">Step 02</span>
+            <span class="tutorial-step-title">Begin creating the survey</span>
+            <span class="tutorial-step-copy">Open the creation form and fill in the main information for the new survey.</span>
+          </button>
+          <button class="tutorial-step" type="button" data-step-target="tutorial-create-gallery" data-step-index="2">
+            <span class="tutorial-step-num">Step 03</span>
+            <span class="tutorial-step-title">Write the questions</span>
+            <span class="tutorial-step-copy">Prepare the survey content and answer options that users will see.</span>
+          </button>
+          <button class="tutorial-step" type="button" data-step-target="tutorial-create-gallery" data-step-index="3">
+            <span class="tutorial-step-num">Step 04</span>
+            <span class="tutorial-step-title">Set voter requirements</span>
+            <span class="tutorial-step-copy">Choose which attributes participants must satisfy in order to join the voting.</span>
+          </button>
+          <button class="tutorial-step" type="button" data-step-target="tutorial-create-gallery" data-step-index="4">
+            <span class="tutorial-step-num">Step 05</span>
+            <span class="tutorial-step-title">Review the full survey</span>
+            <span class="tutorial-step-copy">Check the final summary carefully before confirming the survey creation.</span>
+          </button>
+          <button class="tutorial-step" type="button" data-step-target="tutorial-create-gallery" data-step-index="5">
+            <span class="tutorial-step-num">Step 06</span>
+            <span class="tutorial-step-title">Create the survey</span>
+            <span class="tutorial-step-copy">Submit the configuration and wait for the app to confirm that the survey was created successfully.</span>
+          </button>
+          <button class="tutorial-step" type="button" data-step-target="tutorial-create-gallery" data-step-index="6">
+            <span class="tutorial-step-num">Step 07</span>
+            <span class="tutorial-step-title">See it in pending state</span>
+            <span class="tutorial-step-copy">Return to the organizer list and confirm the new survey is visible and ready for its next phase.</span>
+          </button>
         </div>
-        </div>
-        <button class="carousel-arrow" type="button" data-carousel-target="process-manage" data-direction="next" aria-label="Next manage participation screenshots">&#8250;</button>
       </div>
-    </div>
-  </div>
-
-  <div class="screens-row screens-row-primary">
-    <div class="screen-card fade-in">
-      <button class="screen-phone" type="button" data-app-image="assets/screenshots/home.jpg" data-app-label="Home dashboard">
-        <img class="screen-shot" src="assets/screenshots/home.jpg" alt="Home dashboard screen">
-      </button>
-      <div class="screen-name">Home Dashboard</div>
-        </div>
-
-    <div class="screen-card fade-in">
-      <button class="screen-phone" type="button" data-app-image="assets/screenshots/explore.jpg" data-app-label="Explore surveys">
-        <img class="screen-shot" src="assets/screenshots/explore.jpg" alt="Explore surveys screen">
-      </button>
-      <div class="screen-name">Explore Surveys</div>
-        </div>
-
-    <div class="screen-card fade-in">
-      <button class="screen-phone" type="button" data-app-image="assets/screenshots/survey-details.jpg" data-app-label="Survey detail">
-        <img class="screen-shot" src="assets/screenshots/survey-details.jpg" alt="Survey detail screen">
-      </button>
-      <div class="screen-name">Survey Detail</div>
-        </div>
-
-    <div class="screen-card fade-in">
-      <button class="screen-phone" type="button" data-app-image="assets/screenshots/verify-your-identity.jpg" data-app-label="Verify identity">
-        <img class="screen-shot" src="assets/screenshots/verify-your-identity.jpg" alt="Verify identity screen">
-      </button>
-      <div class="screen-name">Verify Identity</div>
-      <div class="screen-sub">// identity_verify</div>
-    </div>
-
-    <div class="screen-card fade-in">
-      <button class="screen-phone" type="button" data-app-image="assets/screenshots/vote.jpg" data-app-label="Voting screen">
-        <img class="screen-shot" src="assets/screenshots/vote.jpg" alt="Voting screen">
-      </button>
-      <div class="screen-name">Voting Screen</div>
-      <div class="screen-sub">// vote</div>
-    </div>
-
-    <div class="screen-card fade-in">
-      <button class="screen-phone" type="button" data-app-image="assets/screenshots/submitted-vote.jpg" data-app-label="Vote submitted">
-        <img class="screen-shot" src="assets/screenshots/submitted-vote.jpg" alt="Vote submitted screen">
-      </button>
-      <div class="screen-name">Vote Submitted</div>
-      <div class="screen-sub">// vote_submitted</div>
-    </div>
-
-    <div class="screen-card fade-in">
-      <button class="screen-phone" type="button" data-app-image="assets/screenshots/create-survey.jpg" data-app-label="Create survey">
-        <img class="screen-shot" src="assets/screenshots/create-survey.jpg" alt="Create survey screen">
-      </button>
-      <div class="screen-name">Create Survey</div>
-      <div class="screen-sub">// create_survey</div>
-    </div>
-
-    <div class="screen-card fade-in">
-      <button class="screen-phone" type="button" data-app-image="assets/screenshots/manage-survey.jpg" data-app-label="Manage survey">
-        <img class="screen-shot" src="assets/screenshots/manage-survey.jpg" alt="Manage survey screen">
-      </button>
-      <div class="screen-name">Manage Survey</div>
-      <div class="screen-sub">// manage_survey</div>
-    </div>
-  </div>
-
-  <p class="showcase-hint showcase-hint-legacy">Click any screenshot to open a larger preview.</p>
-
-  <div class="screens-row screens-row-legacy">
-    <div class="screen-card fade-in">
-      <div class="screen-phone">
-        <div class="screen-ph-box">🏠</div>
-        <div class="screen-ph-text">Add screenshot here</div>
       </div>
-      <div class="screen-name">Home Dashboard</div>
-      <div class="screen-sub">// home</div>
-    </div>
-
-    <div class="screen-card fade-in">
-      <div class="screen-phone">
-        <div class="screen-ph-box">🔍</div>
-        <div class="screen-ph-text">Add screenshot here</div>
-      </div>
-      <div class="screen-name">Explore Surveys</div>
-      <div class="screen-sub">// explore</div>
-    </div>
-
-    <div class="screen-card fade-in">
-      <div class="screen-phone">
-        <div class="screen-ph-box">📋</div>
-        <div class="screen-ph-text">Add screenshot here</div>
-      </div>
-      <div class="screen-name">Survey Detail</div>
-      <div class="screen-sub">// survey_detail</div>
-    </div>
-
-    <div class="screen-card fade-in">
-      <div class="screen-phone">
-        <div class="screen-ph-box">🔒</div>
-        <div class="screen-ph-text">Add screenshot here</div>
-      </div>
-      <div class="screen-name">Verify Identity</div>
-      <div class="screen-sub">// identity_verify</div>
-    </div>
-
-    <div class="screen-card fade-in">
-      <div class="screen-phone">
-        <div class="screen-ph-box">✅</div>
-        <div class="screen-ph-text">Add screenshot here</div>
-      </div>
-      <div class="screen-name">Checking Eligibility</div>
-      <div class="screen-sub">// eligibility_check</div>
-    </div>
-
-    <div class="screen-card fade-in">
-      <div class="screen-phone">
-        <div class="screen-ph-box">🗳️</div>
-        <div class="screen-ph-text">Add screenshot here</div>
-      </div>
-      <div class="screen-name">Voting Screen</div>
-      <div class="screen-sub">// vote</div>
-    </div>
-
-    <div class="screen-card fade-in">
-      <div class="screen-phone">
-        <div class="screen-ph-box">🎉</div>
-        <div class="screen-ph-text">Add screenshot here</div>
-      </div>
-      <div class="screen-name">Vote Submitted</div>
-      <div class="screen-sub">// vote_submitted</div>
-    </div>
-
-    <div class="screen-card fade-in">
-      <div class="screen-phone">
-        <div class="screen-ph-box">➕</div>
-        <div class="screen-ph-text">Add screenshot here</div>
-      </div>
-      <div class="screen-name">Create Survey</div>
-      <div class="screen-sub">// create_survey</div>
-    </div>
-
-    <div class="screen-card fade-in">
-      <div class="screen-phone">
-        <div class="screen-ph-box">👤</div>
-        <div class="screen-ph-text">Add screenshot here</div>
-      </div>
-      <div class="screen-name">Settings</div>
-      <div class="screen-sub">// settings</div>
-    </div>
-
-    <div class="screen-card fade-in">
-      <div class="screen-phone">
-        <div class="screen-ph-box">OK</div>
-        <div class="screen-ph-text">Add screenshot here</div>
-      </div>
-      <div class="screen-name">Identity Verified</div>
-      <div class="screen-sub">// identity_verified</div>
-    </div>
-
-    <div class="screen-card fade-in">
-      <div class="screen-phone">
-        <div class="screen-ph-box">RV</div>
-        <div class="screen-ph-text">Add screenshot here</div>
-      </div>
-      <div class="screen-name">Review And Submit</div>
-      <div class="screen-sub">// review_submit</div>
-    </div>
-
-    <div class="screen-card fade-in">
-      <div class="screen-phone">
-        <div class="screen-ph-box">MC</div>
-        <div class="screen-ph-text">Add screenshot here</div>
-      </div>
-      <div class="screen-name">My Created Surveys</div>
-      <div class="screen-sub">// my_created_surveys</div>
-    </div>
-
-    <div class="screen-card fade-in">
-      <div class="screen-phone">
-        <div class="screen-ph-box">MP</div>
-        <div class="screen-ph-text">Add screenshot here</div>
-      </div>
-      <div class="screen-name">Participated Surveys</div>
-      <div class="screen-sub">// my_participated_surveys</div>
-    </div>
-
-    <div class="screen-card fade-in">
-      <div class="screen-phone">
-        <div class="screen-ph-box">MS</div>
-        <div class="screen-ph-text">Add screenshot here</div>
-      </div>
-      <div class="screen-name">Manage Survey</div>
-      <div class="screen-sub">// manage_survey</div>
-    </div>
-
-    <div class="screen-card fade-in">
-      <div class="screen-phone">
-        <div class="screen-ph-box">VR</div>
-        <div class="screen-ph-text">Add screenshot here</div>
-      </div>
-      <div class="screen-name">Voter Requirements</div>
-      <div class="screen-sub">// create_survey_requirements</div>
-    </div>
-
-    <div class="screen-card fade-in">
-      <div class="screen-phone">
-        <div class="screen-ph-box">QS</div>
-        <div class="screen-ph-text">Add screenshot here</div>
-      </div>
-      <div class="screen-name">Survey Questions</div>
-      <div class="screen-sub">// create_survey_questions</div>
-    </div>
-
-    <div class="screen-card fade-in">
-      <div class="screen-phone">
-        <div class="screen-ph-box">BG</div>
-        <div class="screen-ph-text">Add screenshot here</div>
-      </div>
-      <div class="screen-name">Survey Budget</div>
-      <div class="screen-sub">// create_survey_budget</div>
-    </div>
+    </details>
   </div>
 
   <div class="sprint-modal" id="app-shot-modal" aria-hidden="true">
@@ -1310,6 +1541,19 @@
   <div class="eyebrow">03 — System architecture</div>
   <h2>How it all fits together</h2>
   <p class="lead">Five components work in sequence — from credential issuance to on-chain vote tallying — with zero personal data exposed at any step.</p>
+
+  <div class="arch-gallery">
+    <figure class="arch-figure fade-in">
+      <button class="arch-image-button" type="button" data-app-image="assets/architecture/arch1.png" data-app-label="Architecture flow diagram part 1">
+        <img class="arch-image" src="assets/architecture/arch1.png" alt="Architecture flow diagram part 1">
+      </button>
+    </figure>
+    <figure class="arch-figure fade-in">
+      <button class="arch-image-button" type="button" data-app-image="assets/architecture/arch2.png" data-app-label="Architecture flow diagram part 2">
+        <img class="arch-image" src="assets/architecture/arch2.png" alt="Architecture flow diagram part 2">
+      </button>
+    </figure>
+  </div>
 
   <div class="arch-flow">
     <div class="arch-node fade-in">
@@ -1352,7 +1596,7 @@
         <li>Creates surveys for the organization</li>
         <li>Verifies zk-proofs</li>
         <li>Adds voters to the census</li>
-        <li>Handles sponsored voting payments</li>
+        <li>Records anonymous votes on-chain</li>
       </ul>
       <div class="arch-arrow">→</div>
     </div>
@@ -1472,6 +1716,22 @@
         <span class="sprint-download-name">Sprint 12</span>
         <button class="sprint-download-link" type="button" data-sprint-image="assets/sprint-results/sprint12.png" data-sprint-label="Sprint 12 export">Show export</button>
       </li>
+      <li class="sprint-download-item">
+        <span class="sprint-download-name">Sprint 13</span>
+        <button class="sprint-download-link" type="button" data-sprint-image="assets/sprint-results/sprint13.png" data-sprint-label="Sprint 12 export">Show export</button>
+      </li>
+      <li class="sprint-download-item">
+        <span class="sprint-download-name">Sprint 14</span>
+        <button class="sprint-download-link" type="button" data-sprint-image="assets/sprint-results/sprint14.png" data-sprint-label="Sprint 12 export">Show export</button>
+      </li>
+      <li class="sprint-download-item">
+        <span class="sprint-download-name">Sprint 15</span>
+        <button class="sprint-download-link" type="button" data-sprint-image="assets/sprint-results/sprint15.png" data-sprint-label="Sprint 12 export">Show export</button>
+      </li>
+      <li class="sprint-download-item">
+        <span class="sprint-download-name">Sprint 16</span>
+        <button class="sprint-download-link" type="button" data-sprint-image="assets/sprint-results/sprint16.png" data-sprint-label="Sprint 12 export">Show export</button>
+      </li>
     </ul>
 
   </details>
@@ -1508,8 +1768,8 @@
       </div>
       <div class="sprint-content">
         <div class="sprint-title">System Design & Architecture</div>
-        <div class="sprint-desc">Designed the high-level platform architecture: credential issuer, Identity wallet integration, smart contract layer, and backend relay. Defined the ZK circuit specification for eligibility proofs. Documented the nullifier-based double-vote prevention and EIP-7702 gas sponsorship model.</div>
-        <div class="sprint-tags"><span class="sprint-tag">Architecture</span><span class="sprint-tag">EIP-7702</span><span class="sprint-tag">ZK Circuits</span></div>
+        <div class="sprint-desc">Designed the high-level platform architecture: credential issuer, Identity wallet integration, smart contract layer, and backend relay. Defined the ZK circuit specification for eligibility proofs. Documented the nullifier-based double-vote prevention model and on-chain verification flow.</div>
+        <div class="sprint-tags"><span class="sprint-tag">Architecture</span><span class="sprint-tag">On-Chain Verification</span><span class="sprint-tag">ZK Circuits</span></div>
       </div>
     </div>
 
@@ -1544,7 +1804,7 @@
       </div>
       <div class="sprint-content">
         <div class="sprint-title">Integration & Backend Relay</div>
-        <div class="sprint-desc">Connected all components end-to-end: Identity Wallet ↔ survey app ↔ backend relay ↔ smart contracts. Implemented the off-chain vote package validator and gas pool reimbursement logic. Integrated Vocdoni protocol for census management and nullifier enforcement. Initial performance tests of client-side proof generation on mobile hardware.</div>
+        <div class="sprint-desc">Connected all components end-to-end: Identity Wallet ↔ survey app ↔ backend relay ↔ smart contracts. Implemented the off-chain vote package validator. Integrated Vocdoni protocol for census management and nullifier enforcement. Initial performance tests of client-side proof generation on mobile hardware.</div>
         <div class="sprint-tags"><span class="sprint-tag">Integration</span><span class="sprint-tag">Vocdoni</span><span class="sprint-tag">Backend Relay</span><span class="sprint-tag">Performance</span></div>
       </div>
     </div>
@@ -1671,21 +1931,87 @@
     });
   });
 
-  document.querySelectorAll('[data-carousel-target]').forEach(button => {
+  const setActiveTutorialStep = (galleryId, activeIndex) => {
+    document.querySelectorAll(`[data-step-target="${galleryId}"]`).forEach((button, index) => {
+      const isActive = index === activeIndex;
+      button.classList.toggle('is-active', isActive);
+      button.setAttribute('aria-current', isActive ? 'step' : 'false');
+    });
+  };
+
+  const getTutorialCards = (gallery) => Array.from(gallery.querySelectorAll('[data-tutorial-card]'));
+
+  const updateTutorialArrows = (galleryId, activeIndex, totalCards) => {
+    document.querySelectorAll(`[data-arrow-target="${galleryId}"]`).forEach((button) => {
+      const direction = button.getAttribute('data-arrow-direction');
+      if (direction === 'prev') button.disabled = activeIndex <= 0;
+      if (direction === 'next') button.disabled = activeIndex >= totalCards - 1;
+    });
+  };
+
+  const scrollTutorialToIndex = (gallery, stepIndex) => {
+    const cards = getTutorialCards(gallery);
+    const card = cards[stepIndex];
+    if (!card) return;
+
+    card.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+    setActiveTutorialStep(gallery.id, stepIndex);
+    updateTutorialArrows(gallery.id, stepIndex, cards.length);
+  };
+
+  document.querySelectorAll('.tutorial-gallery').forEach((gallery) => {
+    const cards = getTutorialCards(gallery);
+    if (!cards.length) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      const visibleEntries = entries
+        .filter((entry) => entry.isIntersecting)
+        .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+
+      const activeCard = visibleEntries[0]?.target;
+      if (!activeCard) return;
+
+      const activeIndex = cards.indexOf(activeCard);
+      if (activeIndex >= 0) {
+        setActiveTutorialStep(gallery.id, activeIndex);
+        updateTutorialArrows(gallery.id, activeIndex, cards.length);
+      }
+    }, {
+      root: gallery,
+      threshold: [0.55, 0.75, 0.95]
+    });
+
+    cards.forEach((card) => observer.observe(card));
+    setActiveTutorialStep(gallery.id, 0);
+    updateTutorialArrows(gallery.id, 0, cards.length);
+  });
+
+  document.querySelectorAll('[data-step-target]').forEach((button) => {
     button.addEventListener('click', () => {
-      const targetId = button.getAttribute('data-carousel-target');
-      const direction = button.getAttribute('data-direction');
-      if (!targetId || !direction) return;
+      const targetId = button.getAttribute('data-step-target');
+      const stepIndex = Number(button.getAttribute('data-step-index'));
+      const gallery = targetId ? document.getElementById(targetId) : null;
+      if (!gallery) return;
+      scrollTutorialToIndex(gallery, stepIndex);
+    });
+  });
 
-      const track = document.getElementById(targetId);
-      const firstCard = track?.querySelector('.screen-card');
-      if (!track || !firstCard) return;
+  document.querySelectorAll('[data-arrow-target]').forEach((button) => {
+    button.addEventListener('click', () => {
+      const targetId = button.getAttribute('data-arrow-target');
+      const direction = button.getAttribute('data-arrow-direction');
+      const gallery = targetId ? document.getElementById(targetId) : null;
+      if (!gallery) return;
 
-      const gap = parseFloat(window.getComputedStyle(track).gap || '0');
-      const step = firstCard.getBoundingClientRect().width + gap;
-      const left = direction === 'next' ? step : -step;
+      const cards = getTutorialCards(gallery);
+      const activeIndex = cards.findIndex((_, index) =>
+        document.querySelector(`[data-step-target="${targetId}"][data-step-index="${index}"]`)?.classList.contains('is-active')
+      );
+      const currentIndex = activeIndex >= 0 ? activeIndex : 0;
+      const nextIndex = direction === 'prev' ? currentIndex - 1 : currentIndex + 1;
 
-      track.scrollBy({ left, behavior: 'smooth' });
+      if (nextIndex < 0 || nextIndex >= cards.length) return;
+      scrollTutorialToIndex(gallery, nextIndex);
     });
   });
 
