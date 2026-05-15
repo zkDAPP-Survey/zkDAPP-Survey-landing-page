@@ -345,6 +345,7 @@
   .app-tutorial-body {
     display: grid;
     grid-template-columns: minmax(420px, 0.7fr) minmax(260px, 0.7fr);
+    align-items: stretch;
     gap: 1.5rem;
     padding: 1.5rem;
   }
@@ -363,6 +364,7 @@
     flex-direction: column;
     gap: 1rem;
     height: 100%;
+    align-self: stretch;
   }
 
   .tutorial-title {
@@ -446,7 +448,9 @@
     flex-direction: column;
     gap: 0.85rem;
     align-items: center;
-    justify-self: center;
+    justify-content: center;
+    justify-self: stretch;
+    align-self: stretch;
     width: 100%;
     height: 100%;
   }
@@ -455,23 +459,29 @@
     display: grid;
     grid-template-columns: 44px minmax(0, 360px) 44px;
     align-items: center;
+    align-content: center;
     gap: 0.75rem;
     width: fit-content;
     max-width: 100%;
     margin: 0 auto;
     justify-content: center;
+    min-height: 100%;
   }
 
   .tutorial-gallery {
     display: flex;
     gap: 0;
     overflow-x: auto;
+    overflow-y: hidden;
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
     scrollbar-width: none;
     -ms-overflow-style: none;
     width: 100%;
     flex: 1 1 auto;
+    align-items: center;
+    overscroll-behavior: contain;
+    touch-action: pan-x;
   }
 
   .tutorial-gallery::-webkit-scrollbar { display: none; }
@@ -487,6 +497,7 @@
     flex-direction: column;
     gap: 0.9rem;
     max-width: 360px;
+    align-self: center;
   }
 
   .tutorial-card-head {
@@ -528,6 +539,7 @@
     position: relative;
     overflow: hidden;
     cursor: zoom-in;
+    flex-shrink: 0;
   }
 
   .screen-phone::before {
@@ -557,7 +569,7 @@
     width: 100%;
     height: 100%;
     object-fit: contain;
-    object-position: top center;
+    object-position: center center;
     display: block;
     background: white;
   }
@@ -680,6 +692,94 @@
   .arch-node-items li { font-size: 0.76rem; color: var(--gray-600); padding-left: 0.75rem; position: relative; line-height: 1.45; }
   .arch-node-items li::before { content: '·'; position: absolute; left: 0; color: var(--blue); }
 
+  .issuer-showcase {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .issuer-stage {
+    display: grid;
+    grid-template-columns: 44px minmax(0, 920px) 44px;
+    align-items: start;
+    gap: 0.75rem;
+    justify-content: center;
+  }
+
+  .issuer-stage > .tutorial-arrow {
+    align-self: start;
+    margin-top: clamp(7.5rem, 18vw, 13rem);
+  }
+
+  .issuer-gallery {
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    touch-action: pan-x;
+  }
+
+  .issuer-gallery::-webkit-scrollbar { display: none; }
+
+  .issuer-card {
+    flex: 0 0 100%;
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .issuer-image-button {
+    appearance: none;
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: 1px solid var(--gray-200);
+    border-radius: 18px;
+    overflow: hidden;
+    background: white;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
+    cursor: zoom-in;
+  }
+
+  .issuer-image-button:hover {
+    border-color: var(--blue-mid);
+    box-shadow: 0 14px 32px rgba(37,99,235,0.1);
+  }
+
+  .issuer-image-button:focus-visible {
+    outline: 3px solid var(--blue-mid);
+    outline-offset: 4px;
+  }
+
+  .issuer-shot {
+    display: block;
+    width: 100%;
+    height: auto;
+    background: white;
+  }
+
+  .issuer-caption {
+    max-width: 760px;
+  }
+
+  .issuer-caption-title {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--gray-900);
+    margin-bottom: 0.2rem;
+  }
+
+  .issuer-caption-copy {
+    font-size: 0.84rem;
+    color: var(--gray-600);
+    line-height: 1.6;
+  }
+
   /* TEAM */
   .team-bg { background: var(--gray-50); border-top: 1px solid var(--gray-200); border-bottom: 1px solid var(--gray-200); }
 
@@ -788,6 +888,12 @@
   .sprint-panel[open] .sprint-toggle-button {
     background: white;
     color: var(--blue-dark);
+  }
+
+  .sprint-panel[open] summary:hover .sprint-toggle-button {
+    background: var(--blue-dark);
+    border-color: var(--blue-dark);
+    color: white;
   }
 
   .sprint-downloads {
@@ -976,6 +1082,7 @@
     .hero-phone.main { width: min(78vw, 280px); height: auto; aspect-ratio: 1 / 2; }
     .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
     .arch-gallery { grid-template-columns: 1fr; }
+    .issuer-stage { grid-template-columns: 44px minmax(0, 1fr) 44px; gap: 0.5rem; }
     .arch-flow { flex-direction: column; }
     .arch-node { border-right: none; border-bottom: 1px solid var(--gray-200); }
     .arch-node:last-child { border-bottom: none; }
@@ -1086,28 +1193,33 @@
         <div class="tutorial-steps" data-step-group="tutorial-valera-gallery">
           <button class="tutorial-step is-active" type="button" data-step-target="tutorial-valera-gallery" data-step-index="0">
             <span class="tutorial-step-num">Step 01</span>
-            <span class="tutorial-step-title">Start from the home page</span>
-            <span class="tutorial-step-copy">Open Valera and begin the flow from the main screen, where you tap `Load Data` to start adding a credential.</span>
+            <span class="tutorial-step-title">Start on My Data</span>
+            <span class="tutorial-step-copy">Open Valera on the My Data screen and begin the credential import flow with the `Load Data` button.</span>
           </button>
           <button class="tutorial-step" type="button" data-step-target="tutorial-valera-gallery" data-step-index="1">
             <span class="tutorial-step-num">Step 02</span>
-            <span class="tutorial-step-title">Choose the issuer</span>
-            <span class="tutorial-step-copy">Select which issuer should process the request. In our testing environment, this is `FIIssuer`.</span>
+            <span class="tutorial-step-title">Choose load method</span>
+            <span class="tutorial-step-copy">Pick `Load with FIIssuer` to request a new credential from the issuer instead of loading via QR code.</span>
           </button>
           <button class="tutorial-step" type="button" data-step-target="tutorial-valera-gallery" data-step-index="2">
             <span class="tutorial-step-num">Step 03</span>
-            <span class="tutorial-step-title">Fill credential information</span>
-            <span class="tutorial-step-copy">Choose the credential type, upload the passport photo, and provide the personal information required for the request.</span>
+            <span class="tutorial-step-title">Fill the credential form</span>
+            <span class="tutorial-step-copy">Select the credential type and start entering the document and identity fields required for the passport request.</span>
           </button>
           <button class="tutorial-step" type="button" data-step-target="tutorial-valera-gallery" data-step-index="3">
             <span class="tutorial-step-num">Step 04</span>
-            <span class="tutorial-step-title">Confirm the request</span>
-            <span class="tutorial-step-copy">Review the submitted information and send the request to the issuer for verification.</span>
+            <span class="tutorial-step-title">Add document photos and submit</span>
+            <span class="tutorial-step-copy">Finish the lower part of the form, attach the passport image, and send the request to the issuer.</span>
           </button>
           <button class="tutorial-step" type="button" data-step-target="tutorial-valera-gallery" data-step-index="4">
             <span class="tutorial-step-num">Step 05</span>
-            <span class="tutorial-step-title">Receive the approved credential</span>
-            <span class="tutorial-step-copy">`FIIssuer` verifies the submitted data and, if the request is accepted, returns the approved credential to Valera.</span>
+            <span class="tutorial-step-title">See the stored credential</span>
+            <span class="tutorial-step-copy">After approval, the new passport credential appears in the My Data list and is ready to inspect or present.</span>
+          </button>
+          <button class="tutorial-step" type="button" data-step-target="tutorial-valera-gallery" data-step-index="5">
+            <span class="tutorial-step-num">Step 06</span>
+            <span class="tutorial-step-title">Inspect credential details</span>
+            <span class="tutorial-step-copy">Open the stored credential to verify the issued fields and technical metadata returned by FIIssuer.</span>
           </button>
         </div>
       </div>
@@ -1118,52 +1230,62 @@
             <article class="tutorial-card fade-in" data-tutorial-card>
               <div class="tutorial-card-head">
                 <span class="tutorial-card-step">Step 01</span>
-                <span class="tutorial-card-title">Home Page</span>
+                <span class="tutorial-card-title">My Data</span>
               </div>
-              <button class="screen-phone" type="button" data-app-image="assets/valera/home_page.png" data-app-label="Valera home page">
-                <img class="screen-shot" src="assets/valera/home_page.png" alt="Valera home page screen">
+              <button class="screen-phone" type="button" data-app-image="assets/valera/1home_page.png" data-app-label="Valera My Data screen">
+                <img class="screen-shot" src="assets/valera/1home_page.png" alt="Valera home page screen">
               </button>
-              <div class="tutorial-card-copy">Start from the Valera home page and tap `Load Data` to begin adding a new credential.</div>
+              <div class="tutorial-card-copy">Start from the My Data screen and tap `Load Data` to begin adding a new credential.</div>
             </article>
             <article class="tutorial-card fade-in" data-tutorial-card>
               <div class="tutorial-card-head">
                 <span class="tutorial-card-step">Step 02</span>
                 <span class="tutorial-card-title">Choose FIIssuer</span>
               </div>
-              <button class="screen-phone" type="button" data-app-image="assets/valera/load_data.png" data-app-label="Valera choose issuer">
-                <img class="screen-shot" src="assets/valera/load_data.png" alt="Valera choose issuer screen">
+              <button class="screen-phone" type="button" data-app-image="assets/valera/2load_data.jpg" data-app-label="Valera load options">
+                <img class="screen-shot" src="assets/valera/2load_data.jpg" alt="Valera load options screen">
               </button>
-              <div class="tutorial-card-copy">Select `FIIssuer` as the source that will evaluate and issue the credential in the demo environment.</div>
+              <div class="tutorial-card-copy">Select `Load with FIIssuer` as the source that will evaluate and issue the credential in the demo environment.</div>
             </article>
             <article class="tutorial-card fade-in" data-tutorial-card>
               <div class="tutorial-card-head">
                 <span class="tutorial-card-step">Step 03</span>
                 <span class="tutorial-card-title">Credential Information</span>
               </div>
-              <button class="screen-phone" type="button" data-app-image="assets/valera/credential_info.png" data-app-label="Valera credential information">
-                <img class="screen-shot" src="assets/valera/credential_info.png" alt="Valera credential information screen">
+              <button class="screen-phone" type="button" data-app-image="assets/valera/3credential_info.jpg" data-app-label="Valera credential information form">
+                <img class="screen-shot" src="assets/valera/3credential_info.jpg" alt="Valera credential information form screen">
               </button>
-              <div class="tutorial-card-copy">Select the credential type, upload the passport image, and enter the personal details required for verification.</div>
+              <div class="tutorial-card-copy">Select the passport credential type and fill in the first set of claim details required for issuance.</div>
             </article>
             <article class="tutorial-card fade-in" data-tutorial-card>
               <div class="tutorial-card-head">
                 <span class="tutorial-card-step">Step 04</span>
-                <span class="tutorial-card-title">Request Confirmation</span>
+                <span class="tutorial-card-title">Attach Photos And Submit</span>
               </div>
-              <button class="screen-phone" type="button" data-app-image="assets/valera/request_confirmation.png" data-app-label="Valera request confirmation">
-                <img class="screen-shot" src="assets/valera/request_confirmation.png" alt="Valera request confirmation screen">
+              <button class="screen-phone" type="button" data-app-image="assets/valera/4review-info.jpg" data-app-label="Valera lower credential form">
+                <img class="screen-shot" src="assets/valera/4review-info.jpg" alt="Valera lower credential form screen">
               </button>
-              <div class="tutorial-card-copy">Review the request and confirm that it should be sent to the issuer for evaluation.</div>
+              <div class="tutorial-card-copy">Complete the remaining fields, add the document photo, and send the request for issuer verification.</div>
             </article>
             <article class="tutorial-card fade-in" data-tutorial-card>
               <div class="tutorial-card-head">
                 <span class="tutorial-card-step">Step 05</span>
                 <span class="tutorial-card-title">Approved Credential</span>
               </div>
-              <button class="screen-phone" type="button" data-app-image="assets/valera/approved_credential.png" data-app-label="Valera approved credential">
-                <img class="screen-shot" src="assets/valera/approved_credential.png" alt="Valera approved credential screen">
+              <button class="screen-phone" type="button" data-app-image="assets/valera/5approved_credential.jpg" data-app-label="Valera approved credential">
+                <img class="screen-shot" src="assets/valera/5approved_credential.jpg" alt="Valera approved credential screen">
               </button>
-              <div class="tutorial-card-copy">If `FIIssuer` approves the request, the issued credential is returned and becomes available in Valera.</div>
+              <div class="tutorial-card-copy">If `FIIssuer` approves the request, the issued passport appears in the My Data list inside Valera.</div>
+            </article>
+            <article class="tutorial-card fade-in" data-tutorial-card>
+              <div class="tutorial-card-head">
+                <span class="tutorial-card-step">Step 06</span>
+                <span class="tutorial-card-title">Credential Details</span>
+              </div>
+              <button class="screen-phone" type="button" data-app-image="assets/valera/6credential-info.jpg" data-app-label="Valera credential details">
+                <img class="screen-shot" src="assets/valera/6credential-info.jpg" alt="Valera credential details screen">
+              </button>
+              <div class="tutorial-card-copy">Open the credential details view to inspect the issued claims, validity window, issuer, and signature data.</div>
             </article>
           </div>
           <button class="tutorial-arrow" type="button" data-arrow-target="tutorial-valera-gallery" data-arrow-direction="next" aria-label="Next credential screenshot">&#8250;</button>
@@ -1237,6 +1359,26 @@
               </button>
               <div class="tutorial-card-copy">Approve disclosure of the required fields so the app can complete registration without exposing anything beyond the requested attributes.</div>
             </article>
+            <article class="tutorial-card fade-in" data-tutorial-card>
+              <div class="tutorial-card-head">
+                <span class="tutorial-card-step">Step 06</span>
+                <span class="tutorial-card-title">Verify Eligibility</span>
+              </div>
+              <button class="screen-phone" type="button" data-app-image="assets/screenshots/register_voting/6eligibility-sucess.jpg" data-app-label="Eligibility verified">
+                <img class="screen-shot" src="assets/screenshots/register_voting/6eligibility-sucess.jpg" alt="Eligibility verification success screen">
+              </button>
+              <div class="tutorial-card-copy">Review the verification result and confirm that the generated proof satisfies the survey requirements before proceeding on-chain.</div>
+            </article>
+            <article class="tutorial-card fade-in" data-tutorial-card>
+              <div class="tutorial-card-head">
+                <span class="tutorial-card-step">Step 07</span>
+                <span class="tutorial-card-title">Complete Registration</span>
+              </div>
+              <button class="screen-phone" type="button" data-app-image="assets/screenshots/register_voting/7registered.jpg" data-app-label="Registration confirmed">
+                <img class="screen-shot" src="assets/screenshots/register_voting/7registered.jpg" alt="Registration confirmation screen">
+              </button>
+              <div class="tutorial-card-copy">Submit the registration transaction and wait for the confirmation dialog that shows the voter has been registered successfully.</div>
+            </article>
           </div>
           <button class="tutorial-arrow" type="button" data-arrow-target="tutorial-register-gallery" data-arrow-direction="next" aria-label="Next registration screenshot">&#8250;</button>
         </div>
@@ -1268,6 +1410,16 @@
             <span class="tutorial-step-title">Confirm the disclosed attributes</span>
             <span class="tutorial-step-copy">Review the requested fields and allow only the data needed to finish registration for the survey.</span>
           </button>
+          <button class="tutorial-step" type="button" data-step-target="tutorial-register-gallery" data-step-index="5">
+            <span class="tutorial-step-num">Step 06</span>
+            <span class="tutorial-step-title">Check the eligibility proof</span>
+            <span class="tutorial-step-copy">Verify that the proof passed validation and that the app is ready to register the voter on-chain.</span>
+          </button>
+          <button class="tutorial-step" type="button" data-step-target="tutorial-register-gallery" data-step-index="6">
+            <span class="tutorial-step-num">Step 07</span>
+            <span class="tutorial-step-title">Finish on-chain registration</span>
+            <span class="tutorial-step-copy">Approve the final transaction and confirm the success message showing the voter has been registered.</span>
+          </button>
         </div>
       </div>
       </div>
@@ -1288,33 +1440,28 @@
         <div class="tutorial-steps" data-step-group="tutorial-vote-gallery">
           <button class="tutorial-step is-active" type="button" data-step-target="tutorial-vote-gallery" data-step-index="0">
             <span class="tutorial-step-num">Step 01</span>
-            <span class="tutorial-step-title">Open the started survey</span>
-            <span class="tutorial-step-copy">Select the active survey you want to participate in and open its voting page.</span>
+            <span class="tutorial-step-title">Open a registered survey</span>
+            <span class="tutorial-step-copy">Browse the registered surveys tab and choose an active survey where your wallet is already eligible to vote.</span>
           </button>
           <button class="tutorial-step" type="button" data-step-target="tutorial-vote-gallery" data-step-index="1">
             <span class="tutorial-step-num">Step 02</span>
-            <span class="tutorial-step-title">Confirm the wallet is registered</span>
-            <span class="tutorial-step-copy">Check that the connected wallet is already registered for the survey before continuing.</span>
+            <span class="tutorial-step-title">Review survey details</span>
+            <span class="tutorial-step-copy">Check the questions, time window, category, and requirements before starting the ballot.</span>
           </button>
           <button class="tutorial-step" type="button" data-step-target="tutorial-vote-gallery" data-step-index="2">
             <span class="tutorial-step-num">Step 03</span>
-            <span class="tutorial-step-title">Start voting</span>
-            <span class="tutorial-step-copy">Tap `Start Voting` to enter the ballot flow for the selected survey.</span>
+            <span class="tutorial-step-title">Choose your answers</span>
+            <span class="tutorial-step-copy">Move through the ballot screens and select the option you want for each question.</span>
           </button>
           <button class="tutorial-step" type="button" data-step-target="tutorial-vote-gallery" data-step-index="3">
             <span class="tutorial-step-num">Step 04</span>
-            <span class="tutorial-step-title">Answer all questions</span>
-            <span class="tutorial-step-copy">Complete the ballot by selecting answers for each question before moving forward.</span>
+            <span class="tutorial-step-title">Review before submitting</span>
+            <span class="tutorial-step-copy">Open the review screen to confirm every answered question before the final submission.</span>
           </button>
           <button class="tutorial-step" type="button" data-step-target="tutorial-vote-gallery" data-step-index="4">
             <span class="tutorial-step-num">Step 05</span>
-            <span class="tutorial-step-title">Review and submit</span>
-            <span class="tutorial-step-copy">Go to `Review & Submit` and verify the final selection before confirming the vote.</span>
-          </button>
-          <button class="tutorial-step" type="button" data-step-target="tutorial-vote-gallery" data-step-index="5">
-            <span class="tutorial-step-num">Step 06</span>
-            <span class="tutorial-step-title">Pass validation and send the vote</span>
-            <span class="tutorial-step-copy">The app checks that at least one answer is selected, re-validates registration, survey status, and proof eligibility, and then submits the vote.</span>
+            <span class="tutorial-step-title">Confirm the recorded vote</span>
+            <span class="tutorial-step-copy">Submit the ballot and verify the success screen showing the vote was recorded and validated.</span>
           </button>
         </div>
       </div>
@@ -1325,62 +1472,52 @@
             <article class="tutorial-card fade-in" data-tutorial-card>
               <div class="tutorial-card-head">
                 <span class="tutorial-card-step">Step 01</span>
-                <span class="tutorial-card-title">Explore Surveys</span>
+                <span class="tutorial-card-title">Choose A Registered Survey</span>
               </div>
-              <button class="screen-phone" type="button" data-app-image="assets/screenshots/explore.jpg" data-app-label="Explore surveys">
-                <img class="screen-shot" src="assets/screenshots/explore.jpg" alt="Explore surveys screen">
+              <button class="screen-phone" type="button" data-app-image="assets/screenshots/vote/1explore-registered.jpg" data-app-label="Registered surveys list">
+                <img class="screen-shot" src="assets/screenshots/vote/1explore-registered.jpg" alt="Registered surveys screen">
               </button>
-              <div class="tutorial-card-copy">Browse active surveys and pick the one you want to answer.</div>
+              <div class="tutorial-card-copy">Open the registered surveys view and select an active survey that shows you already qualify to participate.</div>
             </article>
             <article class="tutorial-card fade-in" data-tutorial-card>
               <div class="tutorial-card-head">
                 <span class="tutorial-card-step">Step 02</span>
-                <span class="tutorial-card-title">Survey Detail</span>
+                <span class="tutorial-card-title">Check Survey Details</span>
               </div>
-              <button class="screen-phone" type="button" data-app-image="assets/screenshots/survey-details.jpg" data-app-label="Survey detail">
-                <img class="screen-shot" src="assets/screenshots/survey-details.jpg" alt="Survey detail screen">
+              <button class="screen-phone" type="button" data-app-image="assets/screenshots/vote/2details-screen.jpg" data-app-label="Survey details">
+                <img class="screen-shot" src="assets/screenshots/vote/2details-screen.jpg" alt="Survey details screen">
               </button>
-              <div class="tutorial-card-copy">Inspect the poll before voting so the context and requirements are clear.</div>
+              <div class="tutorial-card-copy">Review the survey info, schedule, category, and eligibility requirements, then continue with Start Voting.</div>
             </article>
             <article class="tutorial-card fade-in" data-tutorial-card>
               <div class="tutorial-card-head">
                 <span class="tutorial-card-step">Step 03</span>
-                <span class="tutorial-card-title">Verify Identity</span>
+                <span class="tutorial-card-title">Answer The Questions</span>
               </div>
-              <button class="screen-phone" type="button" data-app-image="assets/screenshots/verify-your-identity.jpg" data-app-label="Verify identity">
-                <img class="screen-shot" src="assets/screenshots/verify-your-identity.jpg" alt="Verify identity screen">
+              <button class="screen-phone" type="button" data-app-image="assets/screenshots/vote/3choose-options.jpg" data-app-label="Choose vote options">
+                <img class="screen-shot" src="assets/screenshots/vote/3choose-options.jpg" alt="Voting question screen">
               </button>
-              <div class="tutorial-card-copy">Launch the identity check to prove you belong to the eligible voter set.</div>
+              <div class="tutorial-card-copy">Work through the ballot and pick an option for each question before moving to the review screen.</div>
             </article>
             <article class="tutorial-card fade-in" data-tutorial-card>
               <div class="tutorial-card-head">
                 <span class="tutorial-card-step">Step 04</span>
-                <span class="tutorial-card-title">Checking Eligibility</span>
+                <span class="tutorial-card-title">Review Your Answers</span>
               </div>
-              <button class="screen-phone" type="button" data-app-image="assets/screenshots/checking-eligibility.jpg" data-app-label="Checking eligibility">
-                <img class="screen-shot" src="assets/screenshots/checking-eligibility.jpg" alt="Checking eligibility screen">
+              <button class="screen-phone" type="button" data-app-image="assets/screenshots/vote/4review-answers.jpg" data-app-label="Review and submit vote">
+                <img class="screen-shot" src="assets/screenshots/vote/4review-answers.jpg" alt="Review answers screen">
               </button>
-              <div class="tutorial-card-copy">The mobile app generates and validates the proof locally before unlocking the ballot.</div>
+              <div class="tutorial-card-copy">Inspect the review page to confirm that every response is correct before using Confirm & Submit.</div>
             </article>
             <article class="tutorial-card fade-in" data-tutorial-card>
               <div class="tutorial-card-head">
                 <span class="tutorial-card-step">Step 05</span>
-                <span class="tutorial-card-title">Voting Screen</span>
-              </div>
-              <button class="screen-phone" type="button" data-app-image="assets/screenshots/vote.jpg" data-app-label="Voting screen">
-                <img class="screen-shot" src="assets/screenshots/vote/vote.jpge.jpg" alt="Voting screen">
-              </button>
-              <div class="tutorial-card-copy">Select the answer and submit it without exposing your identity.</div>
-            </article>
-            <article class="tutorial-card fade-in" data-tutorial-card>
-              <div class="tutorial-card-head">
-                <span class="tutorial-card-step">Step 06</span>
                 <span class="tutorial-card-title">Vote Submitted</span>
               </div>
-              <button class="screen-phone" type="button" data-app-image="assets/screenshots/submitted-vote.jpg" data-app-label="Vote submitted">
-                <img class="screen-shot" src="assets/screenshots/submitted-vote.jpg" alt="Vote submitted screen">
+              <button class="screen-phone" type="button" data-app-image="assets/screenshots/vote/5vote-submitted.jpg" data-app-label="Vote submitted">
+                <img class="screen-shot" src="assets/screenshots/vote/5vote-submitted.jpg" alt="Vote submitted screen">
               </button>
-              <div class="tutorial-card-copy">The final state confirms the anonymous vote has been processed.</div>
+              <div class="tutorial-card-copy">The success screen confirms the ballot was recorded, verified, and stored without exposing voter identity.</div>
             </article>
           </div>
           <button class="tutorial-arrow" type="button" data-arrow-target="tutorial-vote-gallery" data-arrow-direction="next" aria-label="Next voting screenshot">&#8250;</button>
@@ -1617,10 +1754,99 @@
 
 <div class="divider"></div>
 
+<section id="our-issuer">
+  <div class="eyebrow">04 â€” Our issuer</div>
+  <h2>Our issuer admin in action</h2>
+  <p class="lead">The issuer dashboard handles incoming credential requests, lets administrators inspect submitted evidence, approve or reject applications, and manage credential schemes.</p>
+
+  <div class="issuer-showcase fade-in">
+    <div class="issuer-stage">
+      <button class="tutorial-arrow" type="button" data-arrow-target="issuer-gallery" data-arrow-direction="prev" aria-label="Previous issuer screenshot">&#8249;</button>
+      <div class="issuer-gallery tutorial-gallery" id="issuer-gallery">
+        <article class="issuer-card" data-tutorial-card>
+          <button class="issuer-image-button" type="button" data-app-image="assets/screenshots/our-issuer/credential-requests-pending.png" data-app-label="Issuer pending requests">
+            <img class="issuer-shot" src="assets/screenshots/our-issuer/credential-requests-pending.png" alt="Issuer dashboard showing pending credential requests">
+          </button>
+          <div class="issuer-caption">
+            <div class="issuer-caption-title">Pending requests list</div>
+            <div class="issuer-caption-copy">Administrators start from the request overview, where new passport requests appear with their current status and a shortcut to open each case.</div>
+          </div>
+        </article>
+        <article class="issuer-card" data-tutorial-card>
+          <button class="issuer-image-button" type="button" data-app-image="assets/screenshots/our-issuer/credential-request-detail-pending-top.png" data-app-label="Issuer request detail overview">
+            <img class="issuer-shot" src="assets/screenshots/our-issuer/credential-request-detail-pending-top.png" alt="Issuer request detail screen with pending status">
+          </button>
+          <div class="issuer-caption">
+            <div class="issuer-caption-title">Request detail overview</div>
+            <div class="issuer-caption-copy">Opening a request shows the credential type, transaction identifier, timestamps, and the submitted claim values tied to the application.</div>
+          </div>
+        </article>
+        <article class="issuer-card" data-tutorial-card>
+          <button class="issuer-image-button" type="button" data-app-image="assets/screenshots/our-issuer/credential-request-detail-pending-actions.png" data-app-label="Issuer review actions">
+            <img class="issuer-shot" src="assets/screenshots/our-issuer/credential-request-detail-pending-actions.png" alt="Issuer request detail screen with attachment and approve reject actions">
+          </button>
+          <div class="issuer-caption">
+            <div class="issuer-caption-title">Review evidence and decide</div>
+            <div class="issuer-caption-copy">The lower part of the request includes the uploaded attachment and the final approve or reject controls used during manual review.</div>
+          </div>
+        </article>
+        <article class="issuer-card" data-tutorial-card>
+          <button class="issuer-image-button" type="button" data-app-image="assets/screenshots/our-issuer/attachment-preview-modal.png" data-app-label="Issuer attachment preview">
+            <img class="issuer-shot" src="assets/screenshots/our-issuer/attachment-preview-modal.png" alt="Issuer attachment preview modal">
+          </button>
+          <div class="issuer-caption">
+            <div class="issuer-caption-title">Attachment preview</div>
+            <div class="issuer-caption-copy">Uploaded passport images can be opened in a dedicated preview modal to inspect the document before issuing a credential.</div>
+          </div>
+        </article>
+        <article class="issuer-card" data-tutorial-card>
+          <button class="issuer-image-button" type="button" data-app-image="assets/screenshots/our-issuer/credential-requests-approved.png" data-app-label="Issuer approved requests">
+            <img class="issuer-shot" src="assets/screenshots/our-issuer/credential-requests-approved.png" alt="Issuer dashboard showing approved credential requests">
+          </button>
+          <div class="issuer-caption">
+            <div class="issuer-caption-title">Approved request state</div>
+            <div class="issuer-caption-copy">Once a request is processed, the overview reflects the updated approved state so the team can track which credentials were already issued.</div>
+          </div>
+        </article>
+        <article class="issuer-card" data-tutorial-card>
+          <button class="issuer-image-button" type="button" data-app-image="assets/screenshots/our-issuer/credential-schemes-list.png" data-app-label="Issuer credential schemes">
+            <img class="issuer-shot" src="assets/screenshots/our-issuer/credential-schemes-list.png" alt="Issuer credential schemes list">
+          </button>
+          <div class="issuer-caption">
+            <div class="issuer-caption-title">Credential schemes</div>
+            <div class="issuer-caption-copy">The schemes area lists supported credential templates and gives administrators controls to view, edit, delete, or create a new scheme.</div>
+          </div>
+        </article>
+        <article class="issuer-card" data-tutorial-card>
+          <button class="issuer-image-button" type="button" data-app-image="assets/screenshots/our-issuer/scheme-details-passport.png" data-app-label="Issuer passport scheme details">
+            <img class="issuer-shot" src="assets/screenshots/our-issuer/scheme-details-passport.png" alt="Issuer passport scheme details screen">
+          </button>
+          <div class="issuer-caption">
+            <div class="issuer-caption-title">Scheme details</div>
+            <div class="issuer-caption-copy">Each scheme exposes its required attributes and metadata so the issuer team can verify the exact structure expected for incoming requests.</div>
+          </div>
+        </article>
+        <article class="issuer-card" data-tutorial-card>
+          <button class="issuer-image-button" type="button" data-app-image="assets/screenshots/our-issuer/create-scheme-modal.png" data-app-label="Issuer create scheme modal">
+            <img class="issuer-shot" src="assets/screenshots/our-issuer/create-scheme-modal.png" alt="Issuer create new scheme modal">
+          </button>
+          <div class="issuer-caption">
+            <div class="issuer-caption-title">Create new scheme</div>
+            <div class="issuer-caption-copy">New credential types can be defined directly in the dashboard by naming the scheme and assembling the required attribute list.</div>
+          </div>
+        </article>
+      </div>
+      <button class="tutorial-arrow" type="button" data-arrow-target="issuer-gallery" data-arrow-direction="next" aria-label="Next issuer screenshot">&#8250;</button>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
 <!-- TEAM -->
 <div id="team" class="team-bg">
   <section style="max-width:1360px; margin:0 auto;">
-    <div class="eyebrow">04 — Our team</div>
+    <div class="eyebrow">05 — Our team</div>
     <h2>The people behind zkDAPP-Survey</h2>
 
     <div class="supervisor-card">
@@ -1654,7 +1880,7 @@
 
 <!-- SPRINTS -->
 <section id="sprints">
-  <div class="eyebrow">05 — Sprint history</div>
+  <div class="eyebrow">06 — Sprint history</div>
   <h2>What we built, sprint by sprint</h2>
   <p class="lead">A two-semester project covering research, design, development, integration, and end-to-end prototyping.</p>
 
@@ -1871,6 +2097,18 @@
     }
   });
 
+  document.querySelectorAll('.sprint-panel').forEach((panel) => {
+    const buttonLabel = panel.querySelector('.sprint-toggle-button');
+    if (!buttonLabel) return;
+
+    const syncSprintToggleLabel = () => {
+      buttonLabel.textContent = panel.open ? 'Hide Sprint Details' : 'View Sprint Details';
+    };
+
+    syncSprintToggleLabel();
+    panel.addEventListener('toggle', syncSprintToggleLabel);
+  });
+
   const appShotModal = document.getElementById('app-shot-modal');
   const appShotImage = document.getElementById('app-shot-image');
   const appShotLabel = document.getElementById('app-shot-label');
@@ -1878,8 +2116,8 @@
 
   const heroPreviewConfig = [
     { src: 'assets/screenshots/create-survey/7-pending-start.png', label: 'Survey pending start', alt: 'Survey pending start screen' },
-    { src: 'assets/screenshots/register_voting/2registration_1.png', label: 'Vote registration', alt: 'Vote registration screen' },
-    { src: 'assets/screenshots/vote/vote.jpg', label: 'Voting screen', alt: 'Voting screen' }
+    { src: 'assets/survey-results.jpg', label: 'Survey results', alt: 'Survey results screen' },
+    { src: 'assets/screenshots/register_voting/2registration_1.png', label: 'Vote registration', alt: 'Vote registration screen' }
   ];
 
   const closeAppShotModal = () => {
@@ -1932,6 +2170,8 @@
   });
 
   const setActiveTutorialStep = (galleryId, activeIndex) => {
+    const gallery = document.getElementById(galleryId);
+    if (gallery) gallery.dataset.activeIndex = String(activeIndex);
     document.querySelectorAll(`[data-step-target="${galleryId}"]`).forEach((button, index) => {
       const isActive = index === activeIndex;
       button.classList.toggle('is-active', isActive);
@@ -2007,7 +2247,7 @@
       const activeIndex = cards.findIndex((_, index) =>
         document.querySelector(`[data-step-target="${targetId}"][data-step-index="${index}"]`)?.classList.contains('is-active')
       );
-      const currentIndex = activeIndex >= 0 ? activeIndex : 0;
+      const currentIndex = activeIndex >= 0 ? activeIndex : Number(gallery.dataset.activeIndex || 0);
       const nextIndex = direction === 'prev' ? currentIndex - 1 : currentIndex + 1;
 
       if (nextIndex < 0 || nextIndex >= cards.length) return;
